@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_class</title>
+</head>
+<body>
+<div>
+    <form action="/manage_form/class/add/" method="post">
+        <p>{{ form.name.label }}{{ form.name }}{{ form.name.errors.0 }}</p>
+        <p>{{ form.teacher.label }}{{ form.teacher }}{{ form.teacher.errors }}</p>
+        <p><input type="submit" value="提交"/></p>
+    </form>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+<ul class="pagination">
+    {% if posts.has_previous %}
+        <li><a href="?page={{ posts.previous_page_number }}" aria-label="Previous"><span aria-hidden="true">«</span></a>
+        </li>
+    {% endif %}
+    {% for i in posts.paginator.set_num %}
+        {% if posts.paginator.current_page == i %}
+            <a href="?page={{ i }}" class="sr-only">{{ i }}</a>
+            <li class="active"><a href="#">{{ i }} <span class="sr-only">{{ i }}</span></a></li>
+        {% else %}
+            <li><a href="?page={{ i }}">{{ i }}</a></li>
+        {% endif %}
+    {% endfor %}
+    {% if posts.has_next %}
+        <li><a href="?page={{ posts.next_page_number }}" aria-label="Next"><span aria-hidden="true">»</span></a>
+        </li>
+    {% endif %}
+</ul>

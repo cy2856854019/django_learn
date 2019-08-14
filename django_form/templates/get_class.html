@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>get_class</title>
+</head>
+<body>
+<div>
+    <a href="/manage_form/class/add/">添加</a>
+</div>
+<div>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名称</th>
+                <th>老师</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for cls in cls_list %}
+            <tr>
+                <td>{{ cls.id }}</td>
+                <td>{{ cls.class_name }}</td>
+                <td>
+                    {% for teacher in cls.teacher.all %}
+                        {{ teacher.name }}
+                    {% endfor %}
+                </td>
+                <td>
+                    <a href="/manage_form/class/delete?id={{ cls.id }}">删除</a>
+                    |
+                    <a href="/manage_form/class/edit?id={{ cls.id }}">编辑</a>
+                    |
+                    <a href="/manage_form/class/set_teacher?id={{ cls.id }}">分配老师</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

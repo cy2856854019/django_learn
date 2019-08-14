@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>f1</title>
+</head>
+<body>
+<div>
+    <form id="form1" method="post">
+        <p>{{ form.username }}{{ form.errors.username.0 }}</p>
+        <p>{{ form.pwd }}{{ form.errors.pwd.0 }}</p>
+        <p>{{ form.age }}{{ form.errors.age.0 }}</p>
+        <p>{{ form.email }}{{ form.errors.email.0 }}</p>
+        <p><input type="submit" value="提交"/><input type="button" value="Ajax提交" onclick="ajaxSubmitForm();"/></p>
+    </form>
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+    function ajaxSubmitForm() {
+        $.ajax({
+            url: '/form1/f1/',
+            type: 'POST',
+            data: $('#form1').serialize(),
+            success: function (arg) {
+                alert(arg);
+            }
+        })
+    }
+</script>
+</body>
+</html>

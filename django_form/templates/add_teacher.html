@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>add_teacher</title>
+</head>
+<body>
+<div>
+    <form action="/manage_form/teacher/add/" method="post">
+        <p>{{ form.name.label }}{{ form.name }}{{ form.errors.name.0 }}</p>
+        <p>{{ form.age.label }}{{ form.age }}{{ form.errors.age.0 }}</p>
+        <p>{{ form.gender.label }}{{ form.gender.0 }}{{ form.gender.1 }}{{ form.errors.gender.0 }}</p>
+        <p><input type="submit" value="提交"/></p>
+    </form>
+</div>
+</body>
+</html>
