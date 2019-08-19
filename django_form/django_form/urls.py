@@ -21,4 +21,6 @@ urlpatterns = [
     path('app1/', include('app1.urls')),
     path('form1/', include('form1.urls')),
     path('manage_form/', include('manage_form.urls')),
+    path('file_upload/', include('file_upload.urls')),
+    path('ajax_demo/', include('ajax_demo.urls')),
 ]

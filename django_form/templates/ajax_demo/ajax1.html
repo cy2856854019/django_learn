@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax1</title>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 15px 10px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<h1>Ajax全套</h1>
+<h3>jQuery Ajax</h3>
+<div>
+    <a href="javascript:void;" class="btn" onclick="ajaxSubmit1();">ajax1</a>
+</div>
+<h3>不依赖jQuery的Ajax发送GET请求</h3>
+<div>
+    <a href="javascript:void;" class="btn" onclick="ajaxSubmit2();">ajax2</a>
+</div>
+<h3>不依赖jQuery的Ajax发送POST请求</h3>
+<div>
+    <a href="javascript:void;" class="btn" onclick="ajaxSubmit3();">ajax3</a>
+</div>
+<h3>'伪'Ajax(iframe标签+form表单)</h3>
+<div>
+    <form id="form1" target="iframe1" method="post"> //需要将form的target属性 设置为iframe的name属性，才能将form从服务器得到的响应渲染到iframe中
+        <input type="text" name="url" value="请输入url"/>
+        <a id="submit" href="javascript:void;" class="btn" onclick="ajaxSubmit4();">ajax4</a>
+        {#        <input id="submit" type="submit" value="ajax4"/>#}
+    </form>
+    <iframe id="iframe1" name="iframe1"></iframe>
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script>
+    function ajaxSubmit1() {
+        $.ajax({
+            url: '/ajax_demo/ajax1/',
+            type: 'POST',
+            data: {'d': 123},
+            success: function (arg) {
+                console.log(arg)
+            }
+        })
+    }
+
+    function ajaxSubmit2() {
+        var xhr = new XMLHttpRequest(); //创建XMLHttpRequest对象，在js中创建对象必须加new关键字
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) { //4表示接受完毕服务器返回的数据
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.open('GET', '/ajax_demo/ajax1/'); //以何种方式（post/get）和某个url创建连接
+
+        xhr.send(null); //发送请求, 当为post请求时，将null改成post的数据
+    }
+
+    function ajaxSubmit3() {
+        var xhr = new XMLHttpRequest(); //创建XMLHttpRequest对象，在js中创建对象必须加new关键字
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) { //4表示接受完毕服务器返回的数据
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.open('POST', '/ajax_demo/ajax1/'); //以何种方式（post/get）和某个url创建连接
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // 设置请求头，要和django内置的请求头一致,key, value
+        xhr.send('p=123'); //发送请求, 当为post请求时，将null改成post的数据
+    }
+
+    function ajaxSubmit4() {
+        document.getElementById('iframe1').onload = submitForm;
+        document.getElementById('form1').submit();
+
+        function submitForm() {
+            var html = this.contentWindow.document.body.innerHTML;
+            console.log(html);
+            var data = JSON.parse(html);
+            alert(data.url)
+        }
+    }
+</script>
+</body>
+</html>
