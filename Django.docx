@@ -434,6 +434,19 @@ Blog.objects.filter(author='cy').delete()
 
 QuerySet对象的常用方法，详见https://docs.djangoproject.com/en/dev/ref/models/querysets/
 
+### QuerySet 对象转成字典
+
+```python
+'''
+在将QuerySet对象转换为字典时使用dict()方法和to_dict()都不可以，于是采用了 model_to_dict(user)方法
+'''
+from django.forms.models import model_to_dict
+```
+
+
+
+
+
 ## 一对多
 
 如：
@@ -468,7 +481,7 @@ b1 = Book.objects.filter(author='cy')[0]
 p1 = b1.publish
 p1.name
 
-p2 = Publish.objects.get(name='人民出版社')
+p2 = Publish.objects.get(name='人民出版社') #不建议用get 没数据会报错，用.filter().first()代替
 p2.book_set.all().values('author')
 '''
 ```
@@ -545,6 +558,16 @@ Book.objects.get(id=3).author.all().values_list('name', 'age')# id为3的书的�
 
 # 逆向查找，用类名(类名的小写)_set，前提是两者通过外键关联，也可通过设置外键中的参数related_name来替代类名_set
 Author.objects.get(id=2).book_set.all() # id为2的作者出的所有书的信息
+
+# 常用与性能相关的查询
+# select_related, 跨表查询,一次夺标查询获取所有的数据
+models.Book.objects.select_related('ut')
+# ut是一对多的外键，上句效果类似如下的sql语句：
+# select * from Book join ut on Bool.ut_id == ut.id
+
+# prefecth_related，也是跨表查询，相当于把上述sql语句拆分两条sql语句执行
+
+
 
 
 ```
@@ -632,11 +655,18 @@ to
 related_name
 related_query_name
 limit_choices_to
-synmetrical, # 仅使用于多对多关联时，synmetrical用于指定内部是够创建反向操作的字段
-through, # 自定义第三张表时， 使用字段用于指定关系表
-through_field, #自定义第三张表时，使用该字段用于指定关系表中那些字段多对多关系表
+synmetrical, # 仅使用于多对多关联时，synmetrical用于指定内部是够创建反向操作的字段，只用于自关联
+through, # 自定义第三张表时， 使用字段用于指定第三张表是那个关系表
+through_field, #自定义第三张表时，使用该字段用于指定关系表中那些字段多对多关系表 
 db_constraint, # 是否在数据库中创建外键约束
 db_table, # 默认创建第三张表时，数据库中表的名称
+
+#第三张表可以通过ManyToMany创建，但是创建后字段个数不能改变，也可手动创建第三张变，此时可以自定义其他字段，但是要加联合约束，也可两者结合（不推荐）
+
+# 多对多的自关联（如互粉，用户id自关联）， 一对多的自关联（如评论，评论的主键id和评论的父id，即该条评论是回复的哪条评论，是新的评论，可将评论的父id字段赋值为默认）
+class User(models.Model):
+    d = models.ManyToManyField('User', related_name='b')
+    # 自关联时，一定要加上related_name，便于反向查找
 
 
 class Cart(models.Model):
@@ -662,6 +692,10 @@ class Cart(models.Model):
         # 联合索引
         index_together = ["user", "goods"]
 ```
+
+
+
+
 
 
 
@@ -770,16 +804,24 @@ request.session.set_expiry(value)# 设置session的有效时间
      - 响应头
      - 响应体
 
-# Ajax
+# 提交数据
+
+## Form表单
+
+页面会刷新
+
+## Ajax
 
 悄悄的向后台发一个请求
+
+本质是通过创建的XMLHttpRequest对象操作
 
 ```html
 $.ajax({
 	url: '要提交的url，类似form表单中的action属性'，
 	type: 'POST'/'GET',
 	data: {}, //包含请求体的字典，key可加引号也可不加
-	datatype: 'JSON'/text/html/xml
+	datatype: 'JSON'（将返回内容序列化）/text/html/xml/jsonp(一种机制，通过后面的原理得知，只能发送get)
     //traditional:true,// 当data中的value为list时（value不能为dict类型，想为dict时要用json转成字符串然后再发送），需要设置这个选项为true
 	success:function(arg){
 		//回调函数，arg是服务端返回的信息
@@ -794,6 +836,178 @@ $.ajax({
 //$('# form表单的id').serialize()  可以将from表单里的数据全部提交
 
 ```
+
+### 1. jQuery Ajax
+
+### 2. 不依赖jQuery的Ajax发送GET请求
+
+### 3. 不依赖jQuery的Ajax发送POST请求
+
+### 4. '伪'Ajax(iframe标签+form表单)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ajax1</title>
+    <style>
+        .btn {
+            display: inline-block;
+            padding: 15px 10px;
+            background-color: yellow;
+        }
+    </style>
+</head>
+<body>
+<h1>Ajax全套</h1>
+<h3>jQuery Ajax</h3>
+<div>
+    <a href="javascript:void;" class="btn" onclick="ajaxSubmit1();">ajax1</a>
+</div>
+<h3>不依赖jQuery的Ajax发送GET请求</h3>
+<div>
+    <a href="javascript:void;" class="btn" onclick="ajaxSubmit2();">ajax2</a>
+</div>
+<h3>不依赖jQuery的Ajax发送POST请求</h3>
+<div>
+    <a href="javascript:void;" class="btn" onclick="ajaxSubmit3();">ajax3</a>
+</div>
+<h3>'伪'Ajax(iframe标签+form表单)</h3>
+<div>
+    <form id="form1" target="iframe1" method="post">//需要将form的target属性 设置为iframe的name属性，才能将form从服务器得到的响应渲染到iframe中
+        <input type="text" name="url" value="请输入url"/>
+        <a id="submit" href="javascript:void;" class="btn" onclick="ajaxSubmit4();">ajax4</a>
+        {#        <input id="submit" type="submit" value="ajax4"/>#}
+    </form>
+    <iframe id="iframe1" name="iframe1"></iframe>
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script>
+    function ajaxSubmit1() {
+        $.ajax({
+            url: '/ajax_demo/ajax1/',
+            type: 'POST',
+            data: {'d': 123},
+            success: function (arg) {
+                console.log(arg)
+            }
+        })
+    }
+
+    function ajaxSubmit2() {
+        var xhr = new XMLHttpRequest(); //创建XMLHttpRequest对象，在js中创建对象必须加new关键字
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) { //4表示接受完毕服务器返回的数据
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.open('GET', '/ajax_demo/ajax1/'); //以何种方式（post/get）和某个url创建连接
+
+        xhr.send(null); //发送请求, 当为post请求时，将null改成post的数据
+    }
+
+    function ajaxSubmit3() {
+        var xhr = new XMLHttpRequest(); //创建XMLHttpRequest对象，在js中创建对象必须加new关键字
+        xhr.onreadystatechange = function () {
+            if (xhr.readyState == 4) { //4表示接受完毕服务器返回的数据
+                console.log(xhr.responseText);
+            }
+        };
+        xhr.open('POST', '/ajax_demo/ajax1/'); //以何种方式（post/get）和某个url创建连接
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded"); // 设置请求头，要和django内置的请求头一致,key, value
+        xhr.send('p=123'); //发送请求, 当为post请求时，将null改成post的数据
+    }
+
+    function ajaxSubmit4() {
+        document.getElementById('iframe1').onload = submitForm;
+        document.getElementById('form1').submit();
+
+        function submitForm() {
+            var html = this.contentWindow.document.body.innerHTML;
+            console.log(html);
+            var data = JSON.parse(html);
+            alert(data.url)
+        }
+    }
+</script>
+</body>
+</html>
+```
+
+## Ajax上传文件（除了伪ajax外，其他都依赖于FormData）
+
+### 1. jQuery Ajax
+
+### 2. 不依赖jQuery的Ajax发送GET请求
+
+### 3. 不依赖jQuery的Ajax发送POST请求
+
+### 4. '伪'Ajax(iframe标签+form表单)
+
+## JSONP 跨域Ajax
+
+### 原理
+
+1. 在head标签中生成一个script标签，将该script标签的src属性改成要发送请求的url**（所有有src属性的标签都可以跨域请求，如iframe img等）**，在显示后立马在删除掉这个script标签，因此前端代码中会出现一下script标签然后立马消失，
+
+2. 通过JSONP从服务器得到的响应数据是直接返回给script，故要按照javascript的格式，如返回HttpResponse('func("JSONP")')，即用接收响应数据的js中的func函数处理返回的数据
+
+3. ### 原理示例
+
+   ```html
+   <!DOCTYPE html>
+   <html lang="en">
+   <head>
+       <meta charset="UTF-8">
+       <title>ajax1</title>
+       <style>
+           .btn {
+               display: inline-block;
+               padding: 15px 10px;
+               background-color: yellow;
+           }
+       </style>
+   </head>
+   <body>
+   <h3>JSONP</h3>
+   <input type="button" value="send" onclick="submitJsonp();"/>
+   <input type="button" value="send_ajax(跨域)" onclick="submitJsonp1();"/>
+   
+   <script src="/static/js/jquery-3.1.1.js"></script>
+   <script>
+       function submitJsonp() {
+           var tag = document.createElement('script'); //创建script标签
+           tag.src = 'http://127.0.0.1:9999/app1/jsonp/'; //设置src属性
+           document.head.appendChild(tag); // 将上述script标签添加到head中
+           document.head.removeChild(tag); // 将上述script标签从head中删除
+       }
+   
+       // 设置本地回调函数处理从http://127.0.0.1:9999/app1/jsonp/返回的响应，因为示例中返回的响应为HttpResponse('func("JSON");')，故此处的回调函数为func，请根据实际情况写回调函数
+       function func(arg) {
+           alert(arg);
+       }
+       // 使用封装好的JSONP，通过jsonp和jsonpCallback即可自己规定回调函数的名称，在后端获取函数名称使用即可
+       function submitJsonp1() {
+           $.ajax({
+               url: 'http://127.0.0.1:9999/app1/jsonp/',
+               type: 'GET',
+               dataType: 'JSONP',
+               jsonp: 'callback', // 相当于http://127.0.0.1:9999/app1/jsonp/?callback,即给url设置参数名
+               jsonpCallback: 'func',// 相当于http://127.0.0.1:9999/app1/jsonp/?callback=func，即给url设置参数值
+           })
+       }
+   </script>
+   </body>
+   </html>
+   ```
+
+   
+
+### 场景
+
+由于浏览器的同源策略（所有浏览器都有），XMLHttpRequest要遵循这个同源策略
 
 # 分页
 
@@ -1269,8 +1483,12 @@ teacher = fields.IntegerField(min_value=1,
 # 只有queryset[obj, obj]中是对象的，即是通过modesl.Teacher.objects.all()得到的数据，在转成字符串时，才需要用django的序列化,因为json模块只能对python的自己的数据类型进行序列化，并且在前端对应的ajax中，要反序列化后才能循环
 from django.core import serializers
 user_list = modesl.Teacher.objects.all()
-ret['data'] = serializers.serilaize('json', user_list)
+ret['data'] = rs.serilaize('json', user_list)
 ```
+
+# tornado源码解析
+
+# 企业官网示例
 
 
 
