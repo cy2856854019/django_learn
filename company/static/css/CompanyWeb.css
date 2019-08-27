@@ -1,0 +1,422 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+}
+
+body {
+    font-size: 12px;
+}
+
+.model {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    opacity: 0.3;
+}
+
+.box {
+    width: 600px;
+    height: 400px;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 150px;
+}
+
+.hide {
+    display: none;
+}
+
+.box .box-login, .box .box-register {
+    display: inline-block;
+    width: 298px;
+    height: 400px;
+}
+
+.box .box-login {
+    background-color: red;
+}
+
+.box .box-register {
+    background-color: blue;
+}
+
+/*----------head头部----------*/
+.head-box {
+    height: 66px;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #2459a2;
+}
+
+.head-content {
+    position: relative; /*此处的relative是为了后面的可以以该标签为标准定位*/
+    line-height: 55px;
+    width: 1016px;
+    /*	height: 55px;
+        background-color: blueviolet;*/
+    margin: 0 auto;
+    /*	border: 2px solid yellow;*/
+}
+
+/*logo*/
+.head-content .logo {
+    margin-top: 5px;
+    float: left;
+    display: inline-block;
+    width: 207px;
+    height: 55px;
+    background-image: url('http://wcdn.oldboyedu.com/Public/Uploads/weblogo/1499239092.png');
+}
+
+/*导航*/
+.head-content .huber {
+    float: left;
+    margin-left: 20px;
+}
+
+.head-content .huber .tb {
+    display: inline-block;
+    margin-left: -3px;
+    padding: 0 16px 0 13px;
+    color: darkgray;
+}
+
+.head-content .huber .tb:hover {
+    color: white;
+    background-color: #396bb3;
+}
+
+.head-content .huber .active, .head-content .huber .active:hover {
+    color: white;
+    background-color: #204982;
+}
+
+/*搜索框*/
+.head-content .key-search {
+    float: right;
+    margin-top: 6px;
+}
+
+.key-search .search-text {
+    float: left;
+    width: 91px;
+    height: 29px;
+    padding: 2px 2px 2px 5px;
+    color: #333;
+    border: 1px solid #e0e0e0;
+}
+
+.head-content .i {
+    display: inline-block;
+    border: 1px solid #e0e0e0;
+    background-color: #f4f4f4;
+    float: right;
+    width: 30px;
+    height: 29px;
+}
+
+.head-content .i .ico {
+    display: inline-block;
+    height: 12px;
+    width: 11px;
+    margin-left: 11px;
+    margin-bottom: 5px;
+    background: url("https://cloud.chouti.com/images/icon.png") no-repeat 0 0;
+    background-position: 0 -197px;
+}
+
+/*登录注册*/
+.head-content .user {
+    position: absolute;
+    right: 140px;
+}
+
+.head-content .user .login, .head-content .user .registe {
+    color: white;
+    padding: 0 20px 0 20px;
+    display: inline-block;
+    margin: 0 auto;
+}
+
+.head-content .user .login:hover, .head-content .user .registe:hover {
+    color: gray;
+    background-color: yellow;
+}
+
+/*------------------------content部分------------------------*/
+.main-content-band {
+    background-color: #ededed;
+    margin-top: 55px;
+}
+
+.main-content-band .main-content {
+    margin: 0 auto;
+    background-color: white;
+    width: 1016px;
+    height: auto !important;
+    min-height: 713px;
+    overflow: hidden;
+}
+
+/*------------------------content-L------------------------*/
+.main-content-band .main-content .content-L {
+    float: left;
+    width: 630px;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+
+/*------------------------top-area------------------------*/
+.main-content-band .main-content .content-L .nav-top-area {
+    border-bottom: 1px solid #ccdcef;
+    margin-left: 5px;
+    height: 35px;
+    /*	padding-bottom: 15px;*/
+}
+
+.nav-top-area .child-nav {
+    float: left;
+}
+
+.nav-top-area .child-nav a {
+    display: inline-block;
+    width: 60px;
+    height: 26px;
+    line-height: 26px;
+    color: #369;
+}
+
+.nav-top-area .child-nav .hotbtn {
+    color: #333;
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    width: 60px;
+    height: 26px;
+    line-height: 26px;
+    margin-top: 3px;
+    margin-bottom: 13px;
+    background: url(https://cloud.chouti.com/images/tip.png?v=2.9) no-repeat 0 0;
+    background-position: 0 -299px;
+}
+
+.nav-top-area .child-nav .newbtn, .nav-top-area .child-nav .personbtn {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    text-align: center;
+    width: 60px;
+    height: 26px;
+    line-height: 26px;
+    margin-top: 3px;
+    margin-bottom: 13px;
+}
+
+.nav-top-area .sort-nav {
+    float: left;
+    margin-left: 155px;
+    line-height: 35px;
+}
+
+.nav-top-area .sort-nav .hotbtn {
+    color: #b4b4b4;
+    margin-left: 5px;
+}
+
+.nav-top-area .sort-nav .newbtn {
+    color: #390;
+    margin-left: 10px;
+}
+
+.nav-top-area .publish-btn {
+    background-color: #84a42b;
+    border: 1px solid #8aab30;
+    color: #fff;
+    height: 30px;
+    line-height: 30px;
+    width: 100px;
+    float: right;
+    display: inline-block;
+    text-align: center;
+    font-size: 14px;
+}
+
+.nav-top-area .publish-btn:hover {
+    background-color: blue;
+}
+
+.nav-top-area .publish-btn .n1 {
+    display: inline-block;
+    height: 12px;
+    width: 11px;
+    background: url(https://cloud.chouti.com/images/icon.png) no-repeat 0 0;
+    background-position: 0 -184px;
+}
+
+/*------------------------article------------------------*/
+.content-list .item {
+    border-bottom: 1px solid #b4b4b4;
+    padding-top: 10px;
+}
+
+.content-list .item .news-pic {
+    float: right;
+    /*	width: 60px;
+        height: 60px;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        padding: 1px;*/
+}
+
+.content-list .item .part1 {
+    line-height: 20px;
+}
+
+.content-list .item .part1:hover a {
+    text-decoration: underline;
+}
+
+.content-list .item .part2 {
+    padding: 10px 0;
+    color: #99aecd;
+}
+
+.part2 .hand-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background: url(https://cloud.chouti.com/images/icon_18_118.png?v=2.13) no-repeat 0 0;
+}
+
+.part2 .icon-digg {
+    background-position: 0 -40px;
+}
+
+.part2 .digg-a:hover .icon-digg {
+    background-position: 0 -20px;
+}
+
+.part2 .icon-discus {
+    background-position: 0 -100px;
+}
+
+.part2 .discus-a:hover .icon-discus {
+    background-position: 0 -55px;
+}
+
+.part2 .icon-collect {
+    background-position: 0 -160px;
+}
+
+.part2 .collect-a:hover .icon-collect {
+    background-position: 0 -140px;
+}
+
+.part2 a {
+    margin-left: 8px;
+}
+
+.part2 a b, .part2 span i {
+    vertical-align: 4px;
+    font-size: 14px;
+}
+
+.share-site-to {
+    float: right;
+    display: none;
+}
+
+.share-site-to .share-icon a {
+    background: url(https://cloud.chouti.com/images/share_icon.png?v=2.15) no-repeat 0 0;
+    display: inline-block;
+    width: 17px;
+    height: 14px;
+    opacity: .3;
+}
+
+.share-site-to .share-icon a.icon-sina {
+    background-position: 0 -90px;
+}
+
+.share-site-to .share-icon a.icon-douban {
+    background-position: 0 -105px;
+}
+
+.share-site-to .share-icon a.icon-qqzone {
+    background-position: 0 -120px;
+}
+
+.share-site-to .share-icon a.icon-renren {
+    background-position: 0 -151px;
+}
+
+.item:hover .share-site-to {
+    display: inline-block;
+}
+
+.share-site-to .share-icon a:hover {
+    opacity: 1;
+}
+
+/*pages*/
+.pages {
+    margin-left: 10px;
+    margin-top: 10px;
+}
+
+.pages li {
+    display: inline-block;
+}
+
+.pages li a {
+    display: inline-block;
+    width: 34px;
+    line-height: 34px;
+    text-align: center;
+    border: 1px solid #e1e1e1;
+    border-radius: 15%;
+    margin-left: 10px;
+}
+
+.pages li a.next-page {
+    width: 50px;
+}
+
+.pages ul li a:hover {
+    background-color: red;
+}
+
+/*------------------------content-R------------------------*/
+.main-content-band .main-content .content-R {
+    float: left;
+}
+
+
+.footer-band {
+    clear: both;
+    margin: 0 auto;
+    width: 960px;
+    font-size: 12px;
+    background-color: #fff;
+    padding: 0 28px;
+    overflow: hidden;
+    text-align: center;
+    border-top: 1px solid gray;
+}
+
+/*轮播图*/
+.slideshow {
+    margin: 0 auto;
+    position: relative;
+    top: 80px;
+}

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>企业官网</title>
+    <link rel="shortcut icon" href="/static/media/img/ico/favicon.ico"/>
+    <link rel="stylesheet" href="/static/plugins/bxslider/css/jquery.bxslider.css"/>
+    <link rel="stylesheet" href="/static/plugins/bootstrap/css/bootstrap.css">
+    <link rel="stylesheet" href="/static/css/CompanyWeb.css"/>
+</head>
+<body>
+<div class="head-box">
+    <div class="head-content">
+        <div class="logo">
+            <a href="https://dig.chouti.com/"></a>
+        </div>
+        <div class="huber">
+            <ul class="nav nav-pills">
+                <li role="presentation" class="active">
+                    <a href="https://dig.chouti.com/all/hot/recent/1" class="tb">首页</a>
+                </li>
+                <li role="presentation">
+                    <a href="https://dig.chouti.com/r/news/hot/1" class="tb">师资介绍</a>
+                </li>
+                <li role="presentation">
+                    <a href="https://dig.chouti.com/r/scoff/hot/1" class="tb">学员风采</a>
+                </li>
+                <li role="presentation">
+                    <a href="https://dig.chouti.com/r/pic/hot/1" class="tb">免费课程</a>
+                </li>
+                <li role="presentation">
+                    <a href="https://dig.chouti.com/r/tec/hot/1" class="tb">老男孩社区</a>
+                </li>
+                <li role="presentation">
+                    <a href="https://dig.chouti.com/r/ask/hot/1" class="tb">渠道合作</a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="user">
+            <a href="#" class="registe">注册</a>
+            <a href="#" class="login">登录</a>
+        </div>
+        <div class="key-search">
+            <form action="/" method="post">
+                <input type="text" name="search-text" class="search-text">
+                <a href="#" class="i">
+                    <span class="ico"></span>
+                </a>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="slideshow">
+    <!-- 轮播图 -->
+    <ul class="bxslider">
+        {% for slide_show in slide_show_list %}
+            <li class="slider">
+                <a href="{{ slide_show.target }}"><img src="{{ img_default_path }}{{ slide_show.img }}"/></a>
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script src="/static/plugins/bxslider/js/jquery.bxslider.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.bxslider').bxSlider();
+    });
+</script>
+
+</body>
+</html>
