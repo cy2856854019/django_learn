@@ -690,10 +690,6 @@ models.Book.objects.select_related('ut')
 # select * from Book join ut on Bool.ut_id == ut.id
 
 # prefecth_related，也是跨表查询，相当于把上述sql语句拆分两条sql语句执行
-
-
-
-
 ```
 
 ### 多对多添加
@@ -716,7 +712,6 @@ a1 = Author.objects.all()
 b1.author.remove(*a1) # 全删除
 b1.author.remove(1)# 删除书b1中id为1的作者
 b1.author.clear()  
-
 ```
 
 ## 外键关联删除
@@ -815,13 +810,14 @@ class Cart(models.Model):
         unique_together = ["goods", "user"]
         # 联合索引
         index_together = ["user", "goods"]
+        
+        # 数据库中对应表的名称，不写默认为<app_name>_<model_name>，该处即为slideshow_SlideShow
+         # db_table = 'SlideShow'
+         # 在admin中显示的SlideShow的别名，如不设置verbose_name_plural，则admin中显示 轮播图s
+         verbose_name = '轮播图'
+         # 在admin中显示的SlideShow的别名,复数时，此处表明单复数都是一样显示 轮播图
+         verbose_name_plural = verbose_name    
 ```
-
-
-
-
-
-
 
 # admin
 
@@ -879,15 +875,6 @@ admin.site.site_title = 'Test Management' # 设置标题
 admin.site.register(models.Book, BookAdmin)
 admin.site.register(models.Author)
 admin.site.register(models.Publish)
-
-class Meta:
-     # 数据库中对应表的名称，不写默认为<app_name>_<model_name>，该处即为slideshow_SlideShow
-     # db_table = 'SlideShow'
-     # 在admin中显示的SlideShow的别名，如不设置verbose_name_plural，则admin中显示 轮播图s
-     verbose_name = '轮播图'
-     # 在admin中显示的SlideShow的别名,复数时，此处表明单复数都是一样显示 轮播图
-     verbose_name_plural = verbose_name
-
 '''
 #方式一：装饰器
 @admin.register(Book)
@@ -1637,7 +1624,7 @@ teacher = fields.IntegerField(min_value=1,
 # 只有queryset[obj, obj]中是对象的，即是通过modesl.Teacher.objects.all()得到的数据，在转成字符串时，才需要用django的序列化,因为json模块只能对python的自己的数据类型进行序列化，并且在前端对应的ajax中，要反序列化后才能循环
 from django.core import serializers
 user_list = modesl.Teacher.objects.all()
-ret['data'] = rs.serilaize('json', user_list)
+ret['data'] = serializers.serialize('json', user_list)
 ```
 
 # tornado源码解析
