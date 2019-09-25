@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>大查柜CA机柜配置</title>
+</head>
+<body>
+<div>
+    <form action="/ca_redis/set/" method="post">
+        {% csrf_token %}
+        <p>企业名称: <input type="text" name="username"/></p>
+        <p>
+            机柜名称:
+            <select id="select1" name="device_name" onchange="func1()">
+                {% for terminal in terminals %}
+                    <option value="{{ terminal.id }}">{{ terminal.name }}</option>
+                {% endfor %}
+            </select>
+        </p>
+        <p>
+            可用端口:
+            <select id="select2" name="available_port"></select>
+        </p>
+        <p><input type="submit" value="提交"></p>
+    </form>
+</div>
+
+</body>
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+    window.onload = function () {
+        func1();
+    };
+
+    function func1() {
+        $.ajax({
+            url: '/ca_redis/get_available_port',
+            type: 'GET',
+            data: {"id": $('#select1').val()},
+            dataType: "json",
+            success: function (output) {
+                console.log(output[0].fields.available_ports);
+                var ports = JSON.parse(output[0].fields.available_ports);
+                palceHTML = '';
+                for (var i = 0; i < ports.length; i++) {
+                    palceHTML += '<option value="' + ports[i] + '">' + ports[i] + '</option>';
+                }
+                $('#select2').html(palceHTML);
+            },
+            error: function (arg) {
+                alert(arg);
+            }
+        })
+    }
+</script>
+</html>
