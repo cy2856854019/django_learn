@@ -1670,6 +1670,21 @@ if __name__ == '__main__':
 
 ## 2. 源码执行流程
 
+1. 创建实例，加载配置文件和路由配置(相当于django中的settings.py)
+
+   ```python
+   settings = {
+       'template_path': 'template', # 设置模板路径
+       'statice_path': 'static', # 设置静态文件路径，相当于django中的STATICFILES_DIRS
+       'static_url_prefix':'/static/', # 设置静态文件在前端调用时的路径
+   }
+   app = tornado.web.Application([
+       (r'/index/', IndexHandler), # 路由配置
+   ], **settings)
+   ```
+
+2. 
+
 ## 3.tornado的异步非阻塞
 
 
