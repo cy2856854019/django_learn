@@ -1683,13 +1683,33 @@ if __name__ == '__main__':
    ], **settings)
    ```
 
-2. 
+2. 创建socket并监听指定端口
+
+   ```python
+   app.listen(8888)
+   ```
+
+3. 启动
+
+   ```python
+   tornado.ioloop.IOLoop.current().start()
+   ```
+
+   
 
 ## 3.tornado的异步非阻塞
 
 
 
 # 企业官网示例
+
+ ## 1. 组合搜索
+
+
+
+## 2. 瀑布流
+
+
 
 
 
