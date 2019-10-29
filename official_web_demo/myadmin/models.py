@@ -42,8 +42,8 @@ class Level(models.Model):
 
 class Video(models.Model):
     status_choice = (
-        (0, '下线'),
         (1, '上线'),
+        (2, '下线'),
     )
 
     status = models.IntegerField(verbose_name='状态', choices=status_choice, default=1)
