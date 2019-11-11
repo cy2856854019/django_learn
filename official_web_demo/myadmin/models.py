@@ -49,6 +49,7 @@ class Video(models.Model):
     status = models.IntegerField(verbose_name='状态', choices=status_choice, default=1)
     level = models.ForeignKey('Level', on_delete=False)
     classification = models.ForeignKey('Classification', null=True, blank=True, on_delete=False)
+    direction = models.ForeignKey('Direction', null=True, blank=True, on_delete=False)
 
     weight = models.CharField(verbose_name='权重(按从大到小)', max_length=32)
 
