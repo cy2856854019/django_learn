@@ -34,21 +34,33 @@ def video2(request, **kwargs):
         if int(v) == 0:
             continue
         condition[k] = int(v)
+
+    direction_list = myadmin_models.Direction.objects.all()
     if condition.get('direction_id'):
-        direction_list = myadmin_models.Direction.objects.all()
-        classification_list = myadmin_models.Direction.objects.get(id=condition['direction_id']).classification.all()
+        # 筛选出当前方向下的分类
+        classification_list = myadmin_models.Direction.objects.filter(id=condition['direction_id']).first().classification.all()
+        # 筛选出当前方向下的分类的id
+        classification_id_list = myadmin_models.Direction.objects.get(
+            id=condition['direction_id']).classification.values_list('id')
+        classification_id_list = list(zip(*classification_id_list))[0]
+        '''
+        当classification_id为空时,筛选当前方向下所有分类
+        不为空时,判断当前的classification_id是否在当前分类里,
+        不在分类里,跳至全部分类
+        '''
+        if not condition.get('classification_id'):
+            condition['classification_id__in'] = classification_id_list
+        else:
+            if condition.get('classification_id') not in classification_id_list:
+                kwargs['classification_id'] = 0
+        # 删除掉direction_id
+        condition.pop('direction_id')
     else:
         classification_list = myadmin_models.Classification.objects.all()
-        if condition.get('classification_id'):
-            direction_list = myadmin_models.Classification.objects.get(
-                id=condition['classification_id']).direction_set.all()
-        else:
-            direction_list = myadmin_models.Direction.objects.all()
     level_list = myadmin_models.Level.objects.all()
     status_list = list(map(lambda x: {'key': x[0], 'value': x[1]}, myadmin_models.Video.status_choice))
-
-    print(condition)
     video_list = myadmin_models.Video.objects.filter(**condition)
+    print(condition)
     return render(request, 'video2.html',
                   {
                       'direction_list': direction_list,
@@ -66,8 +78,8 @@ def get_pdf(request):
     print(request.FILES)
 
     file_obj = request.FILES.get('file')
-    print(file_obj, file_obj.name)
     filename = os.path.join(r'D:\Pycharm_DCG\virtual\django\official_web_demo\static', file_obj.name)
+    print(file_obj, file_obj.name)
     with open(filename, 'wb') as fp:
         for i in file_obj.chunks():
             fp.write(i)
