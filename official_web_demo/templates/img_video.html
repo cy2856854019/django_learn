@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>img_video</title>
+    <style>
+        .img_video {
+            width: 2000px;
+        }
+
+        .img_video .item {
+            float: left;
+            width: 20%;
+        }
+        .img_video .item img{
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="img_video">
+    <h1>show</h1>
+    <div>
+        {% for img in img_list %}
+            <div class="item">
+                <img src="{{ MEDIA_URL }}{{ img.img_path }}">
+                <div>{{ img.summary }}</div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+</body>
+</html>

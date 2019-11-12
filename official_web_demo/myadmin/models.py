@@ -54,10 +54,23 @@ class Video(models.Model):
 
     title = models.CharField(verbose_name='标题', max_length=32)
     summary = models.CharField(verbose_name='简介', max_length=32)
-    img = models.ImageField(verbose_name='图片', upload_to='./static/img/video/')
+    img = models.ImageField(verbose_name='图片', upload_to='./img/video/')
     href = models.CharField(verbose_name='链接', max_length=256)
 
     create_date = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         verbose_name_plural = '视频'
+
+
+class ImgVideo(models.Model):
+    img_path = models.FileField(max_length=32, verbose_name='图片路径', upload_to='./img/img_video/')
+    title = models.CharField(max_length=32, verbose_name='标题')
+    summary = models.CharField(max_length=128, verbose_name='简介')
+
+    class Meta:
+        db_table = 'ImgVideo'
+        verbose_name_plural = '图片视频'
+
+    def __str__(self):
+        return self.title

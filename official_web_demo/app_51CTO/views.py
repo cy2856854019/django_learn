@@ -1,4 +1,5 @@
 import os
+import json
 from django.shortcuts import render, HttpResponse
 from myadmin import models as myadmin_models
 
@@ -38,7 +39,8 @@ def video2(request, **kwargs):
     direction_list = myadmin_models.Direction.objects.all()
     if condition.get('direction_id'):
         # 筛选出当前方向下的分类
-        classification_list = myadmin_models.Direction.objects.filter(id=condition['direction_id']).first().classification.all()
+        classification_list = myadmin_models.Direction.objects.filter(
+            id=condition['direction_id']).first().classification.all()
         # 筛选出当前方向下的分类的id
         classification_id_list = myadmin_models.Direction.objects.get(
             id=condition['direction_id']).classification.values_list('id')
@@ -70,6 +72,29 @@ def video2(request, **kwargs):
                       'kwargs': kwargs,
                       'video_list': video_list,
                   })
+
+
+def img_video(request):
+    img_list = myadmin_models.ImgVideo.objects.all()
+    return render(request, 'img_video.html',
+                  {
+                      'img_list': img_list,
+                      # 'MEDIA_URL': MEDIA_URL,
+                  })
+
+
+def img_video2(request):
+    return render(request, 'img_video2.html')
+
+
+def get_img(request):
+    img_video_list = list(myadmin_models.ImgVideo.objects.values('id', 'img_path','title', 'summary'))
+    ret = {
+        'status': True,
+        'data': img_video_list,
+    }
+    ret = json.dumps(ret)
+    return HttpResponse(ret)
 
 
 def get_pdf(request):

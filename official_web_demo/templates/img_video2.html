@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>img_video2</title>
+    <style>
+        .img_video {
+            width: 2000px;
+        }
+
+        .img_video .item {
+            float: left;
+            width: 20%;
+        }
+
+        .img_video .item img {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="img_video">
+    <h1>show</h1>
+    <div id="container">
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+        <div class="item">
+        </div>
+    </div>
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script>
+    $(function () {
+        initImg();
+    });
+    function initImg() {
+        $.ajax(
+            {
+                url: '/51CTO/get_img',
+                dataType: 'JSON',
+                type: 'GET',
+                success: function (ret) {
+                    var img_list = ret.data;
+                    $.each(img_list, function (index, img) {
+                        var eqv = index % 5;
+                        var tag = document.createElement('img');
+                        tag.src = {{ MEDIA_URL }} + img.img_path;
+                        $('#container').children().eq(eqv).append(tag);
+                    });
+                }
+            }
+        )
+    }
+</script>
+
+</body>
+</html>
