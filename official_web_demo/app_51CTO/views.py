@@ -79,7 +79,6 @@ def img_video(request):
     return render(request, 'img_video.html',
                   {
                       'img_list': img_list,
-                      # 'MEDIA_URL': MEDIA_URL,
                   })
 
 
