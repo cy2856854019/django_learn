@@ -20,64 +20,48 @@
 <body>
 <div class="condition">
     <h1>筛选</h1>
-    <div class="direction">
-        {% if kwargs.direction_id  == 0 %}
-            <a class="active" href="video-0-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">全部</a>
-        {% else %}
-            <a href="video-0-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">全部</a>
-        {% endif %}
-        {% for direction in direction_list %}
-            {% if direction.id == kwargs.direction_id %}
-                <a class="active"
-                   href="video-{{ direction.id }}-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">{{ direction.name }}</a>
-            {% else %}
-                <a href="video-{{ direction.id }}-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">{{ direction.name }}</a>
-            {% endif %}
-        {% endfor %}
-    </div>
-
     <div class="classification">
         {% if kwargs.classification_id  == 0 %}
-            <a class="active" href="video-{{ kwargs.direction_id }}-0-{{ kwargs.level_id }}-{{ kwargs.status }}.html">全部</a>
+            <a class="active" href="video-0-{{ kwargs.level_id }}-{{ kwargs.status }}.html">全部</a>
         {% else %}
-            <a href="video-{{ kwargs.direction_id }}-0-{{ kwargs.level_id }}-{{ kwargs.status }}.html">全部</a>
+            <a href="video-0-{{ kwargs.level_id }}-{{ kwargs.status }}.html">全部</a>
         {% endif %}
         {% for classification in classification_list %}
             {% if classification.id == kwargs.classification_id %}
                 <a class="active"
-                   href="video-{{ kwargs.direction_id }}-{{ classification.id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">{{ classification.name }}</a>
+                   href="video-{{ classification.id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">{{ classification.name }}</a>
             {% else %}
-                <a href="video-{{ kwargs.direction_id }}-{{ classification.id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">{{ classification.name }}</a>
+                <a href="video-{{ classification.id }}-{{ kwargs.level_id }}-{{ kwargs.status }}.html">{{ classification.name }}</a>
             {% endif %}
         {% endfor %}
     </div>
     <div class="level">
         {% if kwargs.level_id == 0 %}
-            <a class="active" href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-0-{{ kwargs.status }}.html">全部</a>
+            <a class="active" href="video-{{ kwargs.classification_id }}-0-{{ kwargs.status }}.html">全部</a>
         {% else %}
-            <a href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-0-{{ kwargs.status }}.html">全部</a>
+            <a href="video-{{ kwargs.classification_id }}-0-{{ kwargs.status }}.html">全部</a>
         {% endif %}
         {% for level in level_list %}
             {% if level.id == kwargs.level_id %}
                 <a class="active"
-                   href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-{{ level.id }}-{{ kwargs.status }}.html">{{ level.title }}</a>
+                   href="video-{{ kwargs.classification_id }}-{{ level.id }}-{{ kwargs.status }}.html">{{ level.title }}</a>
             {% else %}
-                <a href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-{{ level.id }}-{{ kwargs.status }}.html">{{ level.title }}</a>
+                <a href="video-{{ kwargs.classification_id }}-{{ level.id }}-{{ kwargs.status }}.html">{{ level.title }}</a>
             {% endif %}
         {% endfor %}
     </div>
     <div class="status">
         {% if kwargs.status == 0 %}
-            <a class="active" href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-0.html">全部</a>
+            <a class="active" href="video-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-0.html">全部</a>
         {% else %}
-            <a href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-0.html">全部</a>
+            <a href="video-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-0.html">全部</a>
         {% endif %}
         {% for status in status_list %}
             {% if status.key == kwargs.status %}
                 <a class="active"
-                   href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ status.key }}.html">{{ status.value }}</a>
+                   href="video-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ status.key }}.html">{{ status.value }}</a>
             {% else %}
-                <a href="video-{{ kwargs.direction_id }}-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ status.key }}.html">{{ status.value }}</a>
+                <a href="video-{{ kwargs.classification_id }}-{{ kwargs.level_id }}-{{ status.key }}.html">{{ status.value }}</a>
             {% endif %}
         {% endfor %}
     </div>
