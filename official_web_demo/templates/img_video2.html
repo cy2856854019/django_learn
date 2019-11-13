@@ -41,40 +41,44 @@
         initImg();
         listenScroll();
     });
-    var NID = 1;
+    var NID = 0;
+    var EQV = eqv = 0;
+
     function initImg() {//初始化加载图片
         $.ajax(
             {
                 url: '/51CTO/get_img',
                 dataType: 'JSON',
-                data: {nid:NID},
+                data: {nid: NID},
                 type: 'GET',
                 success: function (ret) {
                     var img_list = ret.data;
                     $.each(img_list, function (index, img) {
-                        var eqv = index % 5;// 求余
+                        eqv = (index + EQV) % 5;// 求余
                         var tag = document.createElement('img');//创建img标签
-                        tag.src = {{ MEDIA_URL }} + img.img_path;//给img标签加上src属性
+                        tag.src = {{ MEDIA_URL }} +img.img_path;//给img标签加上src属性
                         $('#container').children().eq(eqv).append(tag);//将完成的img标签添加在对应索引的div.item标签下面
                         NID = NID + 1;
                     });
+                    EQV = eqv + 1;
                 }
             }
         )
     }
+
     function listenScroll() {//监听滚轮是否滚到底部
-        window.addEventListener("scroll",function(){
+        window.addEventListener("scroll", function () {
 
-	 		if (($(document).scrollTop()) >= ($(document).height() - $(window).height())) {
+            if (($(document).scrollTop()) >= ($(document).height() - $(window).height())) {
 
-	           //当底部基本距离+滚动的高度〉=文档的高度-窗体的高度时；
+                //当底部基本距离+滚动的高度〉=文档的高度-窗体的高度时；
 
-	            //我们需要去异步加载数据了
+                //我们需要去异步加载数据了
 
-	           initImg();
+                initImg();
 
-	        }
-		});
+            }
+        });
     }
 </script>
 

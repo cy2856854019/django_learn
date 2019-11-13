@@ -88,10 +88,10 @@ def img_video2(request):
 
 def get_img(request):
     nid = request.GET.get('nid')
-    img_video_list = myadmin_models.ImgVideo.objects.filter(id__gte=nid, id__lte=str(int(nid) + 10)).values('id',
-                                                                                                            'img_path',
-                                                                                                            'title',
-                                                                                                            'summary')
+    img_video_list = myadmin_models.ImgVideo.objects.filter(id__gt=nid, id__lte=str(int(nid) + 7)).values('id',
+                                                                                                          'img_path',
+                                                                                                          'title',
+                                                                                                          'summary')
     img_video_list = list(img_video_list)
     ret = {
         'status': True,
