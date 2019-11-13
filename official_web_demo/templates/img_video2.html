@@ -38,47 +38,52 @@
 <script src="/static/js/jquery-3.1.1.js"></script>
 <script>
     $(function () {
-        initImg();
-        listenScroll();
+        var img = new Img();
+        img.initImg();
+        img.listenScroll();
     });
-    var NID = 0;
-    var EQV = eqv = 0;
 
-    function initImg() {//初始化加载图片
-        $.ajax(
-            {
-                url: '/51CTO/get_img',
-                dataType: 'JSON',
-                data: {nid: NID},
-                type: 'GET',
-                success: function (ret) {
-                    var img_list = ret.data;
-                    $.each(img_list, function (index, img) {
-                        eqv = (index + EQV) % 5;// 求余
-                        var tag = document.createElement('img');//创建img标签
-                        tag.src = {{ MEDIA_URL }} +img.img_path;//给img标签加上src属性
-                        $('#container').children().eq(eqv).append(tag);//将完成的img标签添加在对应索引的div.item标签下面
-                        NID = NID + 1;
-                    });
-                    EQV = eqv + 1;
+
+    function Img() {
+        this.nid = 0;
+        this.eqv = 0;
+
+        var self = this;
+        this.initImg = function () {
+            $.ajax(
+                {
+                    url: '/51CTO/get_img',
+                    dataType: 'JSON',
+                    data: {nid: self.nid},
+                    type: 'GET',
+                    success: function (ret) {
+                        var img_list = ret.data;
+                        $.each(img_list, function (index, img) {
+                            eqv = (index + self.eqv) % 5;// 求余
+                            var tag = document.createElement('img');//创建img标签
+                            tag.src = {{ MEDIA_URL }} +img.img_path;//给img标签加上src属性
+                            $('#container').children().eq(eqv).append(tag);//将完成的img标签添加在对应索引的div.item标签下面
+                            self.nid = self.nid + 1;
+                        });
+                        self.eqv = eqv + 1;
+                    }
                 }
-            }
-        )
-    }
+            )
+        };
+        this.listenScroll = function () {
+            window.addEventListener("scroll", function () {
 
-    function listenScroll() {//监听滚轮是否滚到底部
-        window.addEventListener("scroll", function () {
+                if (($(document).scrollTop()) >= ($(document).height() - $(window).height())) {
 
-            if (($(document).scrollTop()) >= ($(document).height() - $(window).height())) {
+                    //当底部基本距离+滚动的高度〉=文档的高度-窗体的高度时；
 
-                //当底部基本距离+滚动的高度〉=文档的高度-窗体的高度时；
+                    //我们需要去异步加载数据了
 
-                //我们需要去异步加载数据了
+                    self.initImg();
 
-                initImg();
-
-            }
-        });
+                }
+            });
+        };
     }
 </script>
 
