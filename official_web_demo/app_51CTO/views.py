@@ -62,7 +62,7 @@ def video2(request, **kwargs):
     level_list = myadmin_models.Level.objects.all()
     status_list = list(map(lambda x: {'key': x[0], 'value': x[1]}, myadmin_models.Video.status_choice))
     video_list = myadmin_models.Video.objects.filter(**condition)
-    print(condition)
+
     return render(request, 'video2.html',
                   {
                       'direction_list': direction_list,
@@ -87,7 +87,12 @@ def img_video2(request):
 
 
 def get_img(request):
-    img_video_list = list(myadmin_models.ImgVideo.objects.values('id', 'img_path','title', 'summary'))
+    nid = request.GET.get('nid')
+    img_video_list = myadmin_models.ImgVideo.objects.filter(id__gte=nid, id__lte=str(int(nid) + 10)).values('id',
+                                                                                                            'img_path',
+                                                                                                            'title',
+                                                                                                            'summary')
+    img_video_list = list(img_video_list)
     ret = {
         'status': True,
         'data': img_video_list,
