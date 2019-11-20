@@ -47,6 +47,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # 'app_51CTO.middlewares.MyMiddleware',
 ]
 
 ROOT_URLCONF = 'official_web_demo.urls'

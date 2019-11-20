@@ -101,6 +101,13 @@ def get_img(request):
     return HttpResponse(ret)
 
 
+def jsonp(request):
+    response = HttpResponse('func("jsonp_test")')
+    # 设置Access-Control-Allow-Origin参数可以跨站资源共享，效果和django设置中间件一样
+    response["Access-Control-Allow-Origin"] = '*'
+    return response
+
+
 def get_pdf(request):
     print(request.method)
     print(request.POST)

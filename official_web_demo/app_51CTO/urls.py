@@ -10,5 +10,6 @@ urlpatterns = [
     path('img_video', views.img_video),
     path('img_video2', views.img_video2),
     path('get_img', views.get_img),
+    path('jsonp', views.jsonp),
     path('get_pdf', views.get_pdf)
 ]
