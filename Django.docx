@@ -891,7 +891,9 @@ class Cart(models.Model):
         verbose_name="商品"
     )
     num = models.IntegerField(
-        verbose_name="商品数量"
+        verbose_name="商品数量",
+        # 最大、最小值， from django.core.validators import MaxValueValidator, MinValueValidator
+        validators=[MaxValueValidator(100), MinValueValidator(1)], 
     )
     is_select = models.BooleanField(
         default=True,
@@ -1627,8 +1629,6 @@ def mobile_validate(value):
  
  
 class PublishForm(Form):
- 
- 
     title = fields.CharField(max_length=20,
                             min_length=5,
                             error_messages={'required': '标题不能为空',
@@ -1714,7 +1714,7 @@ teacher = fields.IntegerField(min_value=1,
 
     def __init__(self, *args, **kwargs):
         super(ClassForm, self).__init__(*args, **kwargs)
-        self.fields['teacher'].widget.choices = models.Teacher.objects.values_list('id', 'name')
+        self.fields['teacher'].choices = models.Teacher.objects.values_list('id', 'name')
         
 # 第二种解决方法，使用django.forms.models中Model开头的field，其中的参数quertset及为models.Teacher.objects.values_list('id', 'name')，但是要更改对应models的__str__放法，此处及为teacher的__str__()方法
 
