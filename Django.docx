@@ -117,23 +117,17 @@
 ```python
 
 import os
-
-# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+ 
+#向上找两级，获取基地址
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '*ni9k)&9^eb*0k=^si5wrs6v=b#zu221^0kuw37dl=l_laji@q'
-
-# SECURITY WARNING: don't run with debug turned on in production!
+ 
+SECRET_KEY = 'tt^-bhdmqd-^pet%puk*q58gcqg-g)9h+97!4m9aveddp_$%5e'
+ 
 DEBUG = True
-
+ 
 ALLOWED_HOSTS = []
-
-# Application definition
-
+ 
+#APP信息，自己新建的项目如果没有自动加入，可以再次手动加进去
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -141,25 +135,30 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'slideshow',
+    'app01',
+    'backend',
+    'web',
 ]
-
+ 
+#中间件配置
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    # 'django.middleware.csrf.CsrfViewMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    # "app01.my_middlewares.AuthMiddleware",  #注意自己写的中间件，配置要写在系统中的后面
 ]
-
-ROOT_URLCONF = 'company.urls'
-
+ 
+ROOT_URLCONF = 'myblog.urls'
+ 
+#模板（HTML页面）路径相关配置
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'template')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -171,26 +170,40 @@ TEMPLATES = [
         },
     },
 ]
-
-WSGI_APPLICATION = 'company.wsgi.application'
-
-# Database
-# https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
+ 
+# #配置模板
+# TEMPLATE_DIRS = (
+#         os.path.join(BASE_DIR,'templates'),
+# )
+ 
+#网页服务网关协议消息
+WSGI_APPLICATION = 'myblog.wsgi.application'
+ 
+ 
+#原来默认的sqlite数据库
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+ 
+#mysql数据库 同时需要设置__init__.py
+# import pymysql
+# pymysql.install_as_MySQLdb()
+ 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'company_web',
-        'USER': 'root',
-        'PASSWORD': "wen6py",
-        'HOST': '47.103.41.84',
-        'PORT': '3306',
-    }
-}
-
-# Password validation
-# https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
+                'default': {
+                    'ENGINE': 'django.db.backends.mysql',
+                    'NAME':'myblog', #数据库名
+                    'USER': 'root',
+                    'PASSWORD': '',
+                    'HOST': 'localhost',
+                    'PORT': 3306,
+                    }
+                }
+ 
+#认证相关
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -205,32 +218,112 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
-
-# Internationalization
-# https://docs.djangoproject.com/en/2.2/topics/i18n/
-
-LANGUAGE_CODE = 'en-us'
-
-TIME_ZONE = 'UTC'
-
+ 
+# 语言
+LANGUAGE_CODE = 'zh-hans'  # 主要针对admin页面
+# 时间
+TIME_ZONE = 'Asia/Shanghai'
+ 
 USE_I18N = True
-
 USE_L10N = True
-
-USE_TZ = True
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
-
-# 静态文件路径，如css、js文件等
-STATIC_URL = '/static/'
-
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
+ 
+#时区设置
+USE_TZ = False
+ 
+#静态文件
+STATIC_URL = '/static/'  # 静态文件别名
+STATICFILES_DIRS=(
+    os.path.join(BASE_DIR,'static'),  #主文件下静态文件
 )
-# 图片、文件等路径
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')
+ 
+# 与用户上传相关的配置
+#路由urls.py中也需要配置
+"""
+# media配置:
+from django.urls import path,re_path
+from django.views.static import serve
+from django.conf import settings
+ 
+urlpatterns = [
+    re_path(r"media/(?P<path>.*)$",serve,{"document_root":settings.MEDIA_ROOT}),
+]
+"""
+ 
+MEDIA_ROOT=os.path.join(BASE_DIR,"media")
+MEDIA_URL="/media/"
+ 
+# 引用Django自带的User表，继承使用时需要设置
+#如果数据库中的UserInfo(用户表)继承django内置AbstractUser
+#model需导入 from django.contrib.auth.models import AbstractUser
+AUTH_USER_MODEL="app01.UserInfo"  #应用名.UserInfo
+ 
+# 自定义配置登陆验证返回路径
+LOGIN_URL="/login/"
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_URL = '/logout/'
+ 
+ 
+ 
+ 
+#
+EMAIL_HOST = 'smtp.exmail.qq.com'  # 如果是 163 改成 smtp.163.com
+EMAIL_PORT = 465
+EMAIL_HOST_USER = ''           # 帐号
+EMAIL_HOST_PASSWORD = ''  # 密码
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_SSL = True
+ 
+#session存储的相关配置
+# Django默认支持Session，并且默认是将Session数据存储在数据库中，即：django_session表中。提供了5种类型的Session
+"""
+#1.数据库
+SESSION_ENGINE = 'django.contrib.sessions.backends.db'  # 引擎（默认）
+#2.缓存
+SESSION_ENGINE = 'django.contrib.sessions.backends.cache'  # 引擎
+SESSION_CACHE_ALIAS = 'default'
+# 要配合Django缓存配置
+# 使用的缓存别名（默认内存缓存，也可以是memcache），此处别名依赖缓存的设置
+#3.文件
+SESSION_ENGINE = 'django.contrib.sessions.backends.file'    # 引擎
+SESSION_FILE_PATH = None
+# 缓存文件路径，如果为None，则使用tempfile模块获取一个临时地址tempfile.gettempdir()
+#4.缓存+数据库
+SESSION_ENGINE = 'django.contrib.sessions.backends.cached_db'        # 引擎
+#5.加密cookie 基本没有用
+SESSION_ENGINE = 'django.contrib.sessions.backends.signed_cookies'   # 引擎
+"""
+ 
+# SESSION_COOKIE_NAME = "sessionid"                       # Session的cookie保存在浏览器上时的key，即：sessionid＝随机字符串（默认）
+# SESSION_COOKIE_PATH = "/"                               # Session的cookie保存的路径（默认）
+# SESSION_COOKIE_DOMAIN = None                             # Session的cookie保存的域名（默认）
+# SESSION_COOKIE_SECURE = False                            # 是否Https传输cookie（默认）
+# SESSION_COOKIE_HTTPONLY = True                           # 是否Session的cookie只支持http传输（默认）
+# SESSION_COOKIE_AGE = 1209600                             # Session的cookie失效日期（2周）（默认）
+# SESSION_EXPIRE_AT_BROWSER_CLOSE = False                  # 是否关闭浏览器使得Session过期（默认）
+# SESSION_SAVE_EVERY_REQUEST = True        # （每次刷新更新时间） 是否每次请求都保存Session，默认修改之后才保存（默认）
+ 
+SESSION_COOKIE_AGE = 60 * 60 * 24
+SESSION_SAVE_EVERY_REQUEST = True
+ 
+#打印日志到屏幕
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console':{
+            'level':'DEBUG',
+            'class':'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        'django.db.backends': {
+            'handlers': ['console'],
+            'propagate': True,
+            'level':'DEBUG',
+        },
+    }
+}
+
 
 ```
 
@@ -1123,17 +1216,17 @@ $.ajax({
        }
    
        // 设置本地回调函数处理从http://127.0.0.1:9999/app1/jsonp/返回的响应，因为示例中返回的响应为HttpResponse('func("JSON");')，故此处的回调函数为func，请根据实际情况写回调函数
-       function func(arg) {
+       function jsonpCallback(arg) {
            alert(arg);
        }
-       // 使用封装好的JSONP，通过jsonp和jsonpCallback即可自己规定回调函数的名称，在后端获取函数名称使用即可
+       // 使用封装好的JSONP，通过jsonp和jsonpCallback即可自己规定回调函数的名称，在后端获取函数名称使用即可, submitJsonp + jsonpCallback 效果 同submitJsonp1 + jsonpCallback，不同的是前者需要请求的接口http://127.0.0.1:9999/app1/jsonp/返回的函数定死必须和前端一样为jsonpCallback，后者，只要通过func_name=request.GET.get('jsonpCallback')即可获取前端传入的回调函数名
        function submitJsonp1() {
            $.ajax({
                url: 'http://127.0.0.1:9999/app1/jsonp/',
                type: 'GET',
                dataType: 'JSONP',
                jsonp: 'callback', // 相当于http://127.0.0.1:9999/app1/jsonp/?callback,即给url设置参数名
-               jsonpCallback: 'func',// 相当于http://127.0.0.1:9999/app1/jsonp/?callback=func，即给url设置参数值
+               jsonpCallback: 'jsonpCallback',// 相当于http://127.0.0.1:9999/app1/jsonp/?callback=func，即给url设置参数值
            })
        }
    </script>
@@ -1146,6 +1239,35 @@ $.ajax({
 ### 场景
 
 由于浏览器的同源策略（所有浏览器都有），XMLHttpRequest要遵循这个同源策略
+
+## CORS（跨站资源共享）也可处理浏览器的同源策略
+
+```python
+# 后端
+# 注： 谁作为服务端(即呗请求端), 则Access-Control-Allow-Origin头设置在谁的后端接口中
+def jsonp(request):
+    response = HttpResponse('func("jsonp_test")')
+    response["Access-Control-Allow-Origin"] = '*'
+    return response
+```
+
+### 对象的django实现
+
+```python
+# 在对象app下创建中间件文件middlewares.py， 写入如下内容
+from django.utils.deprecation import MiddlewareMixin
+class MyMiddleware(MiddlewareMixin):
+    def process_response(self, request, response):
+        response['Access-Control-Allow-Origin'] = '*'
+        return response
+ # 在settings.py的MIDDLEWARE加上
+MIDDLEWARE = [
+    ......
+    'app_51CTO.middlewares.MyMiddleware', # app_51CTO为app的名称
+    ......
+]
+
+```
 
 # 分页
 
@@ -1378,7 +1500,7 @@ EmailField(CharField)
     ...
 '''
 当在models里想上传FileField或者ImageField字段时，有upload_to属性和default属性，这里的路径，通常会写media路径（在settings.py中设置的文件下载路径，如setting中 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'static', 'media')，传参upload_to=’img’, 则下载的图片会默认存在os.path.join(BASE_DIR, 'static', 'media')下的img中）
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')，传参upload_to=’img’, 则下载的图片会默认存在os.path.join(BASE_DIR, 'media')下的img中）
 '''
 FileField(Field)
     allow_empty_file=False     是否允许空文件
