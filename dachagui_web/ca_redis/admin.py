@@ -1,5 +1,5 @@
 from django.contrib import admin
-from ca_redis.models import Terminal as ca_redis_Terminal
+from ca_redis.models import Terminal as ca_redis_Terminal, PortSetting
 
 
 class TermianlAdmin(admin.ModelAdmin):
@@ -8,6 +8,12 @@ class TermianlAdmin(admin.ModelAdmin):
     ordering = ('id',)
 
 
+class PortSettingAdmin(admin.ModelAdmin):
+    list_display = ('id', 'port', 'company_name', 'terminal')
+    ordering = ('id',)
+
+
 admin.site.site_header = 'CA机柜配置'
 admin.site.site_title = 'CA机柜配置'
 admin.site.register(ca_redis_Terminal, TermianlAdmin)
+admin.site.register(PortSetting, PortSettingAdmin)

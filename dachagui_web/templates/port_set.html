@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>端口配置</title>
+    <style>
+        .label{
+            width: 100px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <form action="/ca_redis/port_set/" method="POST">
+        <p>
+            <span class="label">{{ form_obj.port.label }}:</span> {{ form_obj.port }}
+            <span class="error">{{ form_obj.port.errors.0 }}</span>
+        </p>
+        <p>
+            <span class="label">{{ form_obj.company_name.label }}:</span> {{ form_obj.company_name }}
+            <span class="error">{{ form_obj.company_name.errors.0 }}</span>
+        </p>
+        <p>
+            <span class="label">{{ form_obj.terminal.label }}:</span> {{ form_obj.terminal }}
+            <span class="error">{{ form_obj.terminal.errors.0 }}</span>
+        </p>
+        <input type="submit" value="提交">
+    </form>
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script>
+    window.onload = function () {
+        $('#id_port').attr("disabled","disabled");
+    }
+</script>
+
+</body>
+</html>
