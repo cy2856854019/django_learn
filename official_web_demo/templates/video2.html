@@ -18,6 +18,9 @@
     </style>
 </head>
 <body>
+<h1>
+    {% url 'video2' direction_id=kwargs.direction_id classification_id=kwargs.classification_id level_id=kwargs.level_id status=kwargs.status %}
+</h1>
 <div class="condition">
     <h1>筛选</h1>
     <div class="direction">
