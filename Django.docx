@@ -374,6 +374,36 @@ render_to_response
 
 redirect 参数是路径(url)
 
+# urls.py
+
+```python
+from django.urls import path, re_path, reverse
+from . import views
+
+urlpatterns = [
+    re_path(r'video-(?P<classification_id>(\d+))-(?P<level_id>(\d+))-(?P<status>([0-2])).html',
+            views.video),
+    re_path(r'video2-(?P<direction_id>(\d+))-(?P<classification_id>(\d+))-(?P<level_id>(\d+))-(?P<status>([0-2])).html',
+            views.video2, name='video2'),
+    path('img_video', views.img_video),
+]
+'''
+用url对应的别名（如name='video2'）反向生成url
+ re_path(r'video2-(?P<direction_id>(\d+)).html',
+            views.video2, name='video2'),
+            在html中， {% url 'video2' direction_id=1 %}  => video2-1.html;
+            在py代码中, reverse('video2', kwargs={'direction_id':1}) => video2-1.html;
+            
+path(r'video2-(\d+).html',
+            views.video2, name='video2'),
+            在html中， {% url 'video2' 1 %}  => video2-1.html;
+            在py代码中, reverse('video2', args=(1,)) => video2-1.html;
+'''
+
+```
+
+
+
 # 模板
 
 ## 模板语法
