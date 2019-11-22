@@ -72,6 +72,7 @@ def port_get(request):
     # 转成json后通过HttpResponse对象返回
     ret = json.dumps(ret)
     response = HttpResponse(ret)
+    response["Access-Control-Allow-Origin"] = '*'
 
     return response
 
