@@ -15,7 +15,7 @@ class User(models.Model):
         verbose_name='密码',
     )
 
-    email = models.CharField(
+    email = models.EmailField(
         max_length=64,
         null=False,
         verbose_name='邮箱',

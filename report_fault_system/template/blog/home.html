@@ -3,8 +3,191 @@
 <head>
     <meta charset="UTF-8">
     <title>博客首页</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/home.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        html, body {
+            width: 100%;
+            height: 100%;
+        }
+
+        /*隐藏登录注册窗口*/
+        .model {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: gray;
+            {#opacity: 0.3;#}
+        }
+
+        .box {
+            width: 600px;
+            height: 400px;
+            background-color: white;
+            margin: 0 auto;
+            margin-top: 150px;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .box .box-login, .box .box-register {
+            display: inline-block;
+            width: 298px;
+            height: 400px;
+            margin: 0 auto;
+            margin-top: 150px;
+        }
+
+        .box .box-login {
+            background-color: red;
+        }
+
+        .box .box-register {
+            background-color: blue;
+        }
+
+        /*导航栏*/
+        .head {
+            margin-top: 50px;
+        }
+
+        .head .page_head {
+            position: fixed; /*需要和父标签.head配合使用，才能既脱离文档流又不遮挡后面的元素，此处height要和父标签的margin-top一致*/
+            left: 0;
+            top: 0;
+            height: 50px;
+            overflow: hidden;
+            width: 100%;
+            background: #2459a2;
+        }
+
+        .head .page_head .head_content {
+            margin: 0 auto;
+            width: 90%;
+            height: 100%;
+        }
+
+        .head .page_head .head_content div {
+            display: inline-block;
+        }
+
+        .head .page_head .head_content .huber {
+            background-color: blue;
+            float: left;
+            height: 100%;
+        }
+
+        .head .page_head .head_content .user {
+            background-color: yellow;
+            float: right;
+            height: 100%;
+        }
+
+        .page_content {
+            margin: 0 auto;
+            background-color: gray;
+            height: auto !important;
+            min-height: 120%;
+        }
+
+        .active {
+            background-color: red;
+        }
+
+        a {
+            background-color: white;
+        }
+    </style>
 </head>
 <body>
+<!-- 登录框 -->
+<div class="model hide">
+    <div class="box">
+        <div class="box-login">
+            <form action="/blog/login/" method="POST">
+                <p>
+                    {{ user_form.username.label }}: {{ user_form.username }}
+                    <span>{{ user_form.username.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
+                </p>
+                <input type="submit" value="登录">
+            </form>
+        </div>
+        <div class="box-register">
+            <form action="/blog/register/" method="POST">
+                <p>
+                    {{ user_form.username.label }}: {{ user_form.username }}
+                    <span>{{ user_form.username.errors.0 }}</span>
 
+                </p>
+                <p>
+                    {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.re_psw.label }}: {{ user_form.re_psw }} <span>{{ user_form.re_psw.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.email.label }}: {{ user_form.email }} <span>{{ user_form.email.errors.0 }}</span>
+                </p>
+                <input type="submit" value="注册">
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="head">
+    <div class="page_head">
+        <div class="head_content">
+            <div class="huber">
+                {% if kwargs %}
+                    <a href="{% url 'blog_home' %}">全部</a>
+                {% else %}
+                    <a href="{% url 'blog_home' %}" class="active">全部</a>
+                {% endif %}
+                {% for classification in classification_choice %}
+                    {% if kwargs.classification_id == classification.0 %}
+                        <a id="{{ classification.0 }}" href="{% url 'blog_home' classification_id=classification.0 %}"
+                           class="active">{{ classification.1 }}</a>
+                    {% else %}
+                        <a id="{{ classification.0 }}"
+                           href="{% url 'blog_home' classification_id=classification.0 %}">{{ classification.1 }}</a>
+                    {% endif %}
+
+                {% endfor %}
+            </div>
+            <div class="user">
+                <a class="login" href="#">登录</a>
+                <a class="register" href="#">注册</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="page_content">
+    ...............
+</div>
+<!--分页-->
+<div class="page_page">
+
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script type="text/javascript">
+    var login = document.getElementsByClassName('login')[0];
+    login.onclick = function () {
+        var box = document.getElementsByClassName('model')[0];
+        box.classList.remove('hide');
+    };
+</script>
 </body>
 </html>
