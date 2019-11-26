@@ -56,6 +56,13 @@ class UserForm(forms.Form):
         }
     )
 
+    save_login = forms.fields.ChoiceField(
+        label="是否一周内免登录",
+        required=False,
+        # initial="checked",
+        widget=forms.widgets.CheckboxInput,
+    )
+
     def clean(self):
         psw = self.cleaned_data.get("psw")
         re_psw = self.cleaned_data.get("re_psw")
