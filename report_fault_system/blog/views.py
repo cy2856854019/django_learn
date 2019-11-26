@@ -1,6 +1,9 @@
+import json
+from io import BytesIO
 from django.shortcuts import render, HttpResponse, redirect
 from django.urls import reverse
 from .forms import UserForm
+from tool.captcha import Captcha
 
 
 def home(request, **kwargs):
@@ -28,6 +31,16 @@ def register(request):
         user_form = UserForm(request.POST)
         if user_form.is_valid():
             user_form.save()
-        return HttpResponse('....')
+            return HttpResponse('....')
+        return HttpResponse(str(user_form.errors))
     else:
         return HttpResponse('++++++++')
+
+
+def get_check_code(request):
+    img, code = Captcha().generate_captcha()
+    request.session['captcha'] = code
+
+    fb = BytesIO()
+    img.save(fb, 'png')
+    return HttpResponse(fb.getvalue())

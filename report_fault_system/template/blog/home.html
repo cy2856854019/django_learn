@@ -23,7 +23,7 @@
             right: 0;
             bottom: 0;
             background-color: gray;
-            {#opacity: 0.3;#}
+        {#opacity: 0.3;#}
         }
 
         .box {
@@ -139,6 +139,11 @@
                 <p>
                     {{ user_form.email.label }}: {{ user_form.email }} <span>{{ user_form.email.errors.0 }}</span>
                 </p>
+                <p>
+                    {{ user_form.check_code.label }}: {{ user_form.check_code }}
+                    <span>{{ user_form.check_code.errors.0 }}</span>
+                    <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
+                </p>
                 <input type="submit" value="注册">
             </form>
         </div>
@@ -188,6 +193,10 @@
         var box = document.getElementsByClassName('model')[0];
         box.classList.remove('hide');
     };
+
+    function freshCaptcha(ths) {
+        ths.src += '?';
+    }
 </script>
 </body>
 </html>

@@ -14,25 +14,29 @@ class UserForm(forms.Form):
         }
     )
 
-    psw = forms.CharField(
+    psw = forms.RegexField(
+        r'^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\%\^\&\*\(\)])[0-9a-zA-Z!@#$\%\^\&\*\(\)]{8,16}$',
         max_length=16,
         min_length=8,
         label='密码',
-        validators=[RegexValidator(r'^[a-zA-Z0-9]{8,16}$', '请输入8到16位的包含字母数字的密码')],
         error_messages={
             'required': '输入不能为空',
-            'invalid': '输入格式有误',
+            'invalid': '密码必须包含数字、字母、特殊字符',
+            'max_length': '密码长度不能超过16位',
+            'min_length': '密码长度不能少于8位',
         }
     )
 
-    re_psw = forms.CharField(
+    re_psw = forms.RegexField(
+        r'^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\%\^\&\*\(\)])[0-9a-zA-Z!@#$\%\^\&\*\(\)]{8,16}$',
         max_length=16,
         min_length=8,
         label='确认密码',
-        validators=[RegexValidator(r'^[a-zA-Z0-9]{8,16}$', '请输入8到16位的包含字母数字的密码')],
         error_messages={
             'required': '输入不能为空',
-            'invalid': '输入格式有误',
+            'invalid': '密码必须包含数字、字母、特殊字符',
+            'max_length': '密码长度不能超过16位',
+            'min_length': '密码长度不能少于8位',
         }
     )
 
@@ -45,12 +49,18 @@ class UserForm(forms.Form):
         }
     )
 
+    check_code = forms.CharField(
+        label='验证码',
+        error_messages={
+            'required': '输入不能为空',
+        }
+    )
+
     def clean(self):
         psw = self.cleaned_data.get("psw")
         re_psw = self.cleaned_data.get("re_psw")
 
         if psw != re_psw:
-            self.add_error("re_psw", "两次输入的密码不一致！")
             # 两次输入的密码不一致
             raise ValidationError("两次输入的密码不一致！")
         else:
