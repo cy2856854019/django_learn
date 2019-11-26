@@ -28,6 +28,12 @@ def login(request):
 
 def register(request):
     if request.method == "POST":
+        current_captcha = request.POST.get('captcha').upper()
+        session_captcha = request.session['captcha'].upper()
+
+        if current_captcha != session_captcha:
+            return HttpResponse('验证码错误')
+
         user_form = UserForm(request.POST)
         if user_form.is_valid():
             user_form.save()

@@ -179,4 +179,4 @@ class Captcha(object):
         # img_name = '{}_{}'.format(random_str, ''.join(random.sample(self.characters, 8)))
         # imageio.imwrite(r'{}.png'.format(img_name), imgs[2])
         im = Image.fromarray(imgs[2].astype('uint8')).convert('RGB')
-        return im, self.characters
+        return im, random_str

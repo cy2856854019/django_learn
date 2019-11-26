@@ -15,7 +15,7 @@ class UserForm(forms.Form):
     )
 
     psw = forms.RegexField(
-        r'^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\%\^\&\*\(\)])[0-9a-zA-Z!@#$\%\^\&\*\(\)]{8,16}$',
+        r'^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\.\%\^\&\*\(\)])[0-9a-zA-Z!@#$\.\%\^\&\*\(\)]{8,16}$',
         max_length=16,
         min_length=8,
         label='密码',
@@ -28,7 +28,7 @@ class UserForm(forms.Form):
     )
 
     re_psw = forms.RegexField(
-        r'^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\%\^\&\*\(\)])[0-9a-zA-Z!@#$\%\^\&\*\(\)]{8,16}$',
+        r'^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[!@#$\.\%\^\&\*\(\)])[0-9a-zA-Z!@#$\.\%\^\&\*\(\)]{8,16}$',
         max_length=16,
         min_length=8,
         label='确认密码',
@@ -49,7 +49,7 @@ class UserForm(forms.Form):
         }
     )
 
-    check_code = forms.CharField(
+    captcha = forms.CharField(
         label='验证码',
         error_messages={
             'required': '输入不能为空',
@@ -68,4 +68,5 @@ class UserForm(forms.Form):
 
     def save(self):
         self.cleaned_data.pop('re_psw')
+        self.cleaned_data.pop('captcha')
         User.objects.create(**self.cleaned_data)

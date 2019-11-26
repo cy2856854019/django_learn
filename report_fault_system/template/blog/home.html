@@ -140,8 +140,8 @@
                     {{ user_form.email.label }}: {{ user_form.email }} <span>{{ user_form.email.errors.0 }}</span>
                 </p>
                 <p>
-                    {{ user_form.check_code.label }}: {{ user_form.check_code }}
-                    <span>{{ user_form.check_code.errors.0 }}</span>
+                    {{ user_form.captcha.label }}: {{ user_form.captcha }}
+                    <span>{{ user_form.captcha.errors.0 }}</span>
                     <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
                 </p>
                 <input type="submit" value="注册">
