@@ -23,35 +23,20 @@
             right: 0;
             bottom: 0;
             background-color: gray;
-        {#opacity: 0.3;#}
-        }
-
-        .box {
-            width: 600px;
-            height: 400px;
-            background-color: white;
-            margin: 0 auto;
-            margin-top: 150px;
+            opacity: 0.8;
         }
 
         .hide {
             display: none;
         }
 
-        .box .box-login, .box .box-register {
-            display: inline-block;
-            width: 298px;
-            height: 400px;
+        .model div {
+            width: 60%;
+            height: 80%;
+            background-color: white;
             margin: 0 auto;
             margin-top: 150px;
-        }
 
-        .box .box-login {
-            background-color: red;
-        }
-
-        .box .box-register {
-            background-color: blue;
         }
 
         /*导航栏*/
@@ -66,7 +51,7 @@
             height: 50px;
             overflow: hidden;
             width: 100%;
-            background: #2459a2;
+            background-color: white;
         }
 
         .head .page_head .head_content {
@@ -80,15 +65,33 @@
         }
 
         .head .page_head .head_content .huber {
-            background-color: blue;
             float: left;
             height: 100%;
+            width: 90%;
+        }
+
+        .head .page_head .head_content .huber a {
+            float: left;
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+            width: 10%;
+            line-height: 50px;
         }
 
         .head .page_head .head_content .user {
-            background-color: yellow;
             float: right;
             height: 100%;
+            width: 10%
+        }
+
+        .head .page_head .head_content a {
+            float: right;
+            display: inline-block;
+            height: 100%;
+            text-align: center;
+            width: 50%;
+            line-height: 50px;
         }
 
         .page_content {
@@ -109,53 +112,55 @@
 </head>
 <body>
 <!-- 登录框 -->
-<div class="model hide">
-    <div class="box">
-        <div class="box-login">
-            <form action="/blog/login/" method="POST">
-                <p>
-                    {{ user_form.username.label }}: {{ user_form.username }}
-                    <span>{{ user_form.username.errors.0 }}</span>
-                </p>
-                <p>
-                    {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
-                </p>
-                <p>
-                    {{ user_form.captcha.label }}: {{ user_form.captcha }}
-                    <span>{{ user_form.captcha.errors.0 }}</span>
-                    <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
-                </p>
-                <p>
-                    {{ user_form.save_login }} {{ user_form.save_login.label }}
-                    <span>{{ user_form.save_login.errors.0 }}</span>
-                </p>
-                <input type="submit" value="登录">
-            </form>
-        </div>
-        <div class="box-register">
-            <form action="/blog/register/" method="POST">
-                <p>
-                    {{ user_form.username.label }}: {{ user_form.username }}
-                    <span>{{ user_form.username.errors.0 }}</span>
+<div class="model login hide">
+    <div class="box-login">
+        <form action="/blog/login/" method="POST">
+            <p>
+                {{ user_form.username.label }}: {{ user_form.username }}
+                <span>{{ user_form.username.errors.0 }}</span>
+            </p>
+            <p>
+                {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
+            </p>
+            <p>
+                {{ user_form.captcha.label }}: {{ user_form.captcha }}
+                <span>{{ user_form.captcha.errors.0 }}</span>
+                <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
+            </p>
+            <p>
+                {{ user_form.save_login }} {{ user_form.save_login.label }}
+                <span>{{ user_form.save_login.errors.0 }}</span>
+            </p>
+            <input type="submit" value="登录">
+        </form>
 
-                </p>
-                <p>
-                    {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
-                </p>
-                <p>
-                    {{ user_form.re_psw.label }}: {{ user_form.re_psw }} <span>{{ user_form.re_psw.errors.0 }}</span>
-                </p>
-                <p>
-                    {{ user_form.email.label }}: {{ user_form.email }} <span>{{ user_form.email.errors.0 }}</span>
-                </p>
-                <p>
-                    {{ user_form.captcha.label }}: {{ user_form.captcha }}
-                    <span>{{ user_form.captcha.errors.0 }}</span>
-                    <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
-                </p>
-                <input type="submit" value="注册">
-            </form>
-        </div>
+    </div>
+</div>
+<!-- 注册框 -->
+<div class="model register hide">
+    <div class="box-register">
+        <form action="/blog/register/" method="POST">
+            <p>
+                {{ user_form.username.label }}: {{ user_form.username }}
+                <span>{{ user_form.username.errors.0 }}</span>
+
+            </p>
+            <p>
+                {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
+            </p>
+            <p>
+                {{ user_form.re_psw.label }}: {{ user_form.re_psw }} <span>{{ user_form.re_psw.errors.0 }}</span>
+            </p>
+            <p>
+                {{ user_form.email.label }}: {{ user_form.email }} <span>{{ user_form.email.errors.0 }}</span>
+            </p>
+            <p>
+                {{ user_form.captcha.label }}: {{ user_form.captcha }}
+                <span>{{ user_form.captcha.errors.0 }}</span>
+                <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
+            </p>
+            <input type="submit" value="注册">
+        </form>
     </div>
 </div>
 
@@ -197,11 +202,24 @@
 
 <script src="/static/js/jquery-3.1.1.js"></script>
 <script type="text/javascript">
-    var login = document.getElementsByClassName('login')[0];
-    login.onclick = function () {
-        var box = document.getElementsByClassName('model')[0];
-        box.classList.remove('hide');
-    };
+    $('.login').click(
+        function () {
+            $('.model.login').removeClass('hide');
+            $('.model .box-login').removeClass('hide');
+            $('.model.register').addClass('hide');
+            $('.model .box-register').addClass('hide')
+        }
+    );
+
+    $('.register').click(
+        function () {
+            $('.model.login').addClass('hide');
+            $('.model.register').removeClass('hide');
+            $('.model .box-login').addClass('hide');
+            $('.model .box-register').removeClass('hide');
+        }
+    );
+
 
     function freshCaptcha(ths) {
         ths.src += '?';
