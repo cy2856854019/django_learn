@@ -67,7 +67,7 @@
         .head .page_head .head_content .huber {
             float: left;
             height: 100%;
-            width: 90%;
+            width: 85%;
         }
 
         .head .page_head .head_content .huber a {
@@ -82,7 +82,7 @@
         .head .page_head .head_content .user {
             float: right;
             height: 100%;
-            width: 10%
+            width: 15%
         }
 
         .head .page_head .head_content a {
@@ -185,8 +185,13 @@
                 {% endfor %}
             </div>
             <div class="user">
-                <a class="login" href="#">登录</a>
-                <a class="register" href="#">注册</a>
+                {% if username %}
+                    您好, {{ username }}
+                    <a href="/blog/login_out/">退出</a>
+                {% else %}
+                    <a class="login" href="#">登录</a>
+                    <a class="register" href="#">注册</a>
+                {% endif %}
             </div>
         </div>
     </div>

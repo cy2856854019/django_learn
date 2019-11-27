@@ -55,8 +55,8 @@ class UserForm(forms.Form):
             'required': '输入不能为空',
         }
     )
-
     save_login = forms.fields.ChoiceField(
+        choices=[(False, '0'), (True, '1')],
         label="是否一周内免登录",
         required=False,
         # initial="checked",
@@ -76,4 +76,9 @@ class UserForm(forms.Form):
     def save(self):
         self.cleaned_data.pop('re_psw')
         self.cleaned_data.pop('captcha')
+        self.cleaned_data.pop('save_login')
+        obj = User.objects.filter(username=self.cleaned_data.get('username')).first()
+        if obj:
+            return False
         User.objects.create(**self.cleaned_data)
+        return True

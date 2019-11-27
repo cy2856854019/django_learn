@@ -1,6 +1,6 @@
 import json
 from io import BytesIO
-from django.shortcuts import render, HttpResponse, redirect
+from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from django.urls import reverse
 from .forms import UserForm
 from tool.captcha import Captcha
@@ -20,45 +20,55 @@ def home(request, **kwargs):
         )
 
         user_form = UserForm()
+        # 提取浏览器中的cookie，如果不为空，表示已经登录
+        username = request.COOKIES.get('username')
+        session = list(request.session.values())
+        print(session)
+
         return render(request, 'blog/home.html', locals())
 
 
 def login(request):
-    if request.method == "POST":
-        current_captcha = request.POST.get('captcha').upper()
-        session_captcha = request.session['captcha'].upper()
-        if current_captcha != session_captcha:
-            return HttpResponse('验证码错误')
+    current_captcha = request.POST.get('captcha').upper()
+    session_captcha = request.session['captcha'].upper()
+    if current_captcha != session_captcha:
+        return HttpResponse('验证码错误')
 
-        username = request.POST.get('username')
-        psw = request.POST.get('psw')
+    username = request.POST.get('username')
+    psw = request.POST.get('psw')
 
-        user = User.objects.filter(username=username, psw=psw)
-        if not user:
-            return HttpResponse('用户名或密码错误')
-        if request.POST.get('save_login'):
-            # 如在前端选择了一周内免登录，则设置对应的session有效时间
-            request.session.set_expiry(60 * 60 * 24 * 7)
-        return HttpResponse('登录成功')
+    user = User.objects.filter(username=username, psw=psw)
+    if not user:
+        return HttpResponse('用户名或密码错误')
+    if request.POST.get('save_login'):
+        # 如在前端选择了一周内免登录，则设置对应的session有效时间
+        request.session.set_expiry(5)
+    response = HttpResponseRedirect('/blog/home/')
+    # 如果cookie没有设置过期时间，当用户关闭浏览器的时候，cookie就自动过期了。
+    response.set_cookie('username', username)
+    return response
 
-    else:
-        return HttpResponse('+++++++++++')
+
+def login_out(request):
+    response = HttpResponseRedirect('/blog/home/')
+    response.delete_cookie('username')
+    return response
 
 
 def register(request):
-    if request.method == "POST":
-        current_captcha = request.POST.get('captcha').upper()
-        session_captcha = request.session['captcha'].upper()
-        if current_captcha != session_captcha:
-            return HttpResponse('验证码错误')
+    current_captcha = request.POST.get('captcha').upper()
+    session_captcha = request.session['captcha'].upper()
+    if current_captcha != session_captcha:
+        return HttpResponse('验证码错误')
 
-        user_form = UserForm(request.POST)
-        if user_form.is_valid():
-            user_form.save()
-            return HttpResponse('....')
-        return HttpResponse(str(user_form.errors))
-    else:
-        return HttpResponse('++++++++')
+    user_form = UserForm(request.POST)
+    if user_form.is_valid():
+        ret = user_form.save()
+        if not ret:
+            # 用户名已存在
+            return HttpResponse('用户名已存在')
+        return HttpResponse('注册成功')
+    return HttpResponse(str(user_form.errors))
 
 
 def get_check_code(request):

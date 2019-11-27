@@ -21,7 +21,7 @@ class Captcha(object):
         if self._truefonts:
             return self._truefonts
         self._truefonts = [
-            ImageFont.truetype(r'C:\Windows\Fonts\arial.ttf', s) for s in self._font_sizes
+            ImageFont.truetype(r'arial.ttf', s) for s in self._font_sizes
         ]
         return self._truefonts
 
