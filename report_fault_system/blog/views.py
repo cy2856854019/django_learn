@@ -1,10 +1,9 @@
 import json
 from io import BytesIO
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
-from django.urls import reverse
 from .forms import UserForm
 from tool.captcha import Captcha
-from repository.models import User
+from repository.models import User, Blog
 
 
 def home(request, **kwargs):
@@ -20,12 +19,26 @@ def home(request, **kwargs):
         )
 
         user_form = UserForm()
+        # 文章列表
+
         # 提取浏览器中的cookie，如果不为空，表示已经登录
         username = request.COOKIES.get('username')
-        session = list(request.session.values())
-        print(session)
+        # session = list(request.session.values())
+        # 是否已开通博客
+        user = blog_opening = None
+        if username:
+            user = User.objects.filter(username=username).first()
+            blog_opening = hasattr(user, 'blog')
 
-        return render(request, 'blog/home.html', locals())
+        return render(request, 'blog/home.html',
+                      {
+                          'user_form': user_form,
+                          'username': username,
+                          'user': user,
+                          'blog_opening': blog_opening,
+                          'classification_choice': classification_choice,
+                      }
+                      )
 
 
 def login(request):
@@ -78,3 +91,8 @@ def get_check_code(request):
     fb = BytesIO()
     img.save(fb, 'png')
     return HttpResponse(fb.getvalue())
+
+
+def blog_open(request, **kwargs):
+    Blog.objects.create(**kwargs)
+    return HttpResponseRedirect('/blog/home/')

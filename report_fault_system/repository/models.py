@@ -34,17 +34,17 @@ class User(models.Model):
 class Blog(models.Model):
     suffix = models.CharField(
         max_length=64,
-        null=False,
+        null=True,
         verbose_name='标语',
     )
     theme = models.CharField(
         max_length=64,
-        null=False,
+        null=True,
         verbose_name='主题',
     )
     title = models.CharField(
         max_length=64,
-        null=False,
+        null=True,
         verbose_name='标题',
     )
     summary = models.CharField(
@@ -57,6 +57,11 @@ class Blog(models.Model):
         verbose_name='用户ID',
         on_delete=False,
         null=False,
+        # related_name='user',
+    )
+
+    tag = models.ManyToManyField(
+        'Tag'
     )
 
     class Meta:
@@ -85,4 +90,72 @@ class Fan(models.Model):
     class Meta:
         db_table = 'Fan'
         verbose_name = '粉丝'
+        verbose_name_plural = verbose_name
+
+
+# 文章信息表
+class Article(models.Model):
+    title = models.CharField(
+        verbose_name='标题',
+        max_length=64,
+        null=False,
+    )
+    abstract = models.CharField(
+        verbose_name='摘要',
+        max_length=1024,
+        null=False,
+    )
+    create_or_update_date = models.DateTimeField(
+        verbose_name='创建(更新)时间',
+        null=False,
+        auto_now=True,
+    )
+
+    content = models.ForeignKey(
+        'ArticleContent',
+        verbose_name='文章内容',
+        on_delete=True,
+        null=False
+    )
+
+    blog = models.ForeignKey(
+        'Blog',
+        verbose_name='博客ID',
+        on_delete=False,
+    )
+
+    tag = models.ManyToManyField(
+        'Tag',
+    )
+
+    class Meta:
+        db_table = 'Article'
+        verbose_name = '文章信息'
+        verbose_name_plural = verbose_name
+
+
+# 文章内容表
+class ArticleContent(models.Model):
+    content = models.TextField(
+        verbose_name='文章内容',
+        null=False,
+    )
+
+    class Meta:
+        db_table = 'ArticleContent'
+        verbose_name = '文章内容'
+        verbose_name_plural = verbose_name
+
+
+# 标签表
+class Tag(models.Model):
+    tag = models.CharField(
+        verbose_name='标签',
+        max_length=64,
+        null=False,
+    )
+
+    class Meta:
+        db_table = 'Tag'
+        verbose_name = '标签'
         verbose_name_plural = verbose_name
