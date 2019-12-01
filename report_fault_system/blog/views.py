@@ -96,3 +96,7 @@ def get_check_code(request):
 def blog_open(request, **kwargs):
     Blog.objects.create(**kwargs)
     return HttpResponseRedirect('/blog/home/')
+
+
+def my_blog(request, **kwargs):
+    return render(request, 'blog/myblog.html', locals())
