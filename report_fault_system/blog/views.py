@@ -3,10 +3,10 @@ from io import BytesIO
 from django.shortcuts import render, HttpResponse, redirect, HttpResponseRedirect
 from .forms import UserForm
 from tool.captcha import Captcha
-from repository.models import User, Blog
+from repository.models import User, Blog, Direction, Classification
 
 
-def home(request, **kwargs):
+def home_demo(request, **kwargs):
     if request.method == 'GET':
         for key, value in kwargs.items():
             kwargs[key] = int(kwargs.pop(key))
@@ -30,7 +30,7 @@ def home(request, **kwargs):
             user = User.objects.filter(username=username).first()
             blog_opening = hasattr(user, 'blog')
 
-        return render(request, 'blog/home.html',
+        return render(request, 'blog/home_demo.html',
                       {
                           'user_form': user_form,
                           'username': username,
@@ -39,6 +39,33 @@ def home(request, **kwargs):
                           'classification_choice': classification_choice,
                       }
                       )
+
+
+def home(request, **kwargs):
+    if request.method == 'GET':
+        for key, value in kwargs.items():
+            kwargs[key] = int(kwargs.pop(key))
+    direction_list = Direction.objects.all()
+
+    return render(request, 'blog/home.html',
+                  {
+                      'direction_list': direction_list,
+                  }
+                  )
+
+
+def get_item_set(request):
+    id = request.GET.get('id')
+    id = int(id)
+
+    direction_obj = Direction.objects.filter(id=id).first()
+    classification_list = direction_obj.direction.values_list('name')
+    classification_list = list(classification_list)
+    classification_list = list(zip(*classification_list))[0]
+
+    ret = json.dumps(classification_list)
+
+    return HttpResponse(ret)
 
 
 def login(request):

@@ -159,3 +159,33 @@ class Tag(models.Model):
         db_table = 'Tag'
         verbose_name = '标签'
         verbose_name_plural = verbose_name
+
+
+class Direction(models.Model):
+    '''
+    方向：
+    '''
+    name = models.CharField(verbose_name='名称', max_length=32)
+    # classification = models.ForeignKey('Classification', on_delete=True)
+
+    class Meta:
+        db_table = 'Direction'
+        verbose_name_plural = '网站方向'
+
+    def __str__(self):
+        return self.name
+
+
+class Classification(models.Model):
+    '''
+    分类：
+    '''
+    name = models.CharField(verbose_name='名称', max_length=32)
+    direction = models.ForeignKey('Direction', on_delete=True, default='1', related_name='direction')
+
+    class Meta:
+        db_table = 'Classification'
+        verbose_name_plural = '分类'
+
+    def __str__(self):
+        return self.name

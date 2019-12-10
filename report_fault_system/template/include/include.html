@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>
+        {% block title %}
+
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" type="text/css" href="/static/css/include.css">
+    {% block css %}
+
+    {% endblock %}
+</head>
+<body>
+<div class="pg-header">
+    <div class="logo left">
+        logo
+    </div>
+    <div class="head-menus left">
+        <div class="items">
+            <a href="#">菜单一</a>
+            <div class="items-set">
+                <a href="#">子菜单一</a>
+                <a href="#">子菜单二</a>
+                <a href="#">子菜单三</a>
+            </div>
+        </div>
+        <div class="items">
+            <a href="#">菜单二</a>
+            <div class="items-set">
+                <a href="#">子菜单一</a>
+                <a href="#">子菜单二</a>
+                <a href="#">子菜单三</a>
+            </div>
+        </div>
+        <div class="items">
+            <a href="#">菜单三</a>
+            <div class="items-set">
+                <a href="#">子菜单一</a>
+                <a href="#">子菜单二</a>
+                <a href="#">子菜单三</a>
+            </div>
+        </div>
+        <div class="items">
+            <a href="#">菜单四</a>
+            <div class="items-set">
+                <a href="#">子菜单一</a>
+                <a href="#">子菜单二</a>
+                <a href="#">子菜单三</a>
+            </div>
+        </div>
+    </div>
+    <div class="head-user right">
+        <div class="items">
+            <a href="#">消息</a>
+        </div>
+        <div class="items">
+            <a href="#">通知</a>
+        </div>
+        <div class="items">
+            <a href="#">任务</a>
+        </div>
+        <div class="items">
+            <a href="#">
+                <img src="/media/img/1.png" class="person">
+            </a>
+            <div class="items-set">
+                <a href="#">我的</a>
+                <a href="#">退出</a>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="pg-body">
+    <div class="menus">
+        {% block menus %}
+
+        {% endblock %}
+    </div>
+    <div class="contents">
+        {% block contents %}
+
+        {% endblock %}
+    </div>
+</div>
+<div class="pg-footer">
+
+</div>
+
+{% block js %}
+
+{% endblock %}
+
+</body>
+</html>

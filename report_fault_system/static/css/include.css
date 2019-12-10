@@ -1,0 +1,100 @@
+body {
+    margin: 0;
+}
+
+.left {
+    float: left;
+}
+
+.right {
+    float: right;
+}
+
+.hide {
+    display: none;
+}
+
+.pg-header {
+    height: 48px;
+    background-color: #2f72ab;
+    min-width: 1000px; /*当小于最小宽度时，下边框会出现滚动条*/
+}
+
+.pg-header a {
+    text-decoration: none;
+}
+
+.pg-header .logo {
+    color: yellow;
+    line-height: 48px; /*行宽和父标签宽度相同，用于垂直居中*/
+    text-align: center; /*水平居中*/
+    width: 200px;
+    font-size: 30px;
+    background-color: blue;
+}
+
+.pg-header .head-menus, .pg-header .head-user {
+    line-height: 48px;
+}
+
+.pg-header .head-menus .items, .pg-header .head-user .items {
+    color: white;
+    display: inline-block;
+    padding: 0 10px;
+    position: relative
+}
+
+.pg-header .head-menus .items .items-set, .pg-header .head-user .items .items-set {
+    display: none;
+    position: absolute;
+}
+
+.pg-header .head-user .items .items-set {
+    top: 48px;
+}
+
+.pg-header .head-menus .items:hover .items-set, .pg-header .head-user .items:hover .items-set {
+    display: block;
+    // 设置垂直方向的层级
+    z-index: 999;
+}
+
+.pg-header .head-menus .items .items-set a, .pg-header .head-user .items .items-set a {
+    display: block;
+    width: 200px;
+}
+
+.pg-header .head-user .items .person {
+    text-align: center;
+    width: 48px;
+}
+
+.pg-header .head-user .items > a {
+    height: 48px;
+    overflow: hidden;
+    display: inline-block;
+}
+
+img {
+    border-radius: 50%;
+}
+
+/*文本*/
+.pg-body .menus {
+    position: absolute;
+    top: 48px;
+    bottom: 0;
+    width: 200px;
+    background-color: red;
+}
+
+.pg-body .contents {
+    position: absolute;
+    top: 48px;
+    bottom: 0;
+    left: 201px;
+    right: 0;
+    background-color: white;
+    overflow: scroll;
+
+}
