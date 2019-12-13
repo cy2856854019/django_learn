@@ -14,12 +14,13 @@
         .pg-body .contents .contents-items {
             height: 1000px;
         }
+
     </style>
 {% endblock %}
 
 {% block menus %}
     {% for direction in direction_list %}
-        <div class="menus-item" onmouseover="cateShow(this)" onmouseout="cateHide()" id="{{ direction.id }}">
+        <div class="menus-item" onmouseover="cateShow(this)" onmouseout="cateHide(this)" id="{{ direction.id }}">
             <a class="menus-item-all" href="#">
                 {{ direction.name }}
             </a>
@@ -44,11 +45,16 @@
                 data: {id: ths.getAttribute('id')},
                 success: function (ret) {
                     var classification_list = ret;
+                    console.log(classification_list);
                     var div_tag = document.createElement('div');
                     div_tag.classList.add('menus-set');
-                    div_tag.style.cssFloat = 'right';
+                    div_tag.style.position = 'absolute';
+                    div_tag.style.left = '150px';
+                    div_tag.style.top = '0';
+                    div_tag.style.zIndex = '999';
+                    {#div_tag.style.cssFloat = 'right';#}
                     $.each(classification_list, function (index, classification) {
-                        console.log(classification);
+                        console.log(classification + 'eweqwe');
                         var tag = document.createElement('a');
                         tag.innerHTML = classification;
                         div_tag.append(tag);
@@ -58,8 +64,8 @@
             })
         }
 
-        function cateHide() {
-
+        function cateHide(ths) {
+            $(ths).children('.menus-set').removeClass('menus-set');
         }
 
     </script>

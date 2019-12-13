@@ -55,7 +55,10 @@ body {
 
 .pg-header .head-menus .items:hover .items-set, .pg-header .head-user .items:hover .items-set {
     display: block;
-    // 设置垂直方向的层级
+}
+
+.pg-header .head-menus .items .items-set, .pg-header .head-user .items .items-set {
+    /*设置垂直方向的层级*/
     z-index: 999;
 }
 
