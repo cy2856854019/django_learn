@@ -14,4 +14,7 @@ urlpatterns = [
     re_path('open/(?P<user_id>(\d+))/', views.blog_open, name='blog_open'),
     path('register/', views.register, name='register'),
     path('get_check_code/', views.get_check_code, name='get_check_code'),
+
+
+    path('test/', views.test),
 ]

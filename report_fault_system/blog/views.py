@@ -127,3 +127,7 @@ def blog_open(request, **kwargs):
 
 def my_blog(request, **kwargs):
     return render(request, 'blog/myblog.html', locals())
+
+
+def test(request):
+    return render(request, 'blog/test.html')

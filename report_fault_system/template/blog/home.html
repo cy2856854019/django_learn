@@ -11,16 +11,15 @@
             text-align: center;
         }
 
-        .pg-body .contents .contents-items {
-            height: 1000px;
+        .pg-body .menus .menus-item {
+            position: relative;
         }
-
     </style>
 {% endblock %}
 
 {% block menus %}
     {% for direction in direction_list %}
-        <div class="menus-item" onmouseover="cateShow(this)" onmouseout="cateHide(this)" id="{{ direction.id }}">
+        <div class="menus-item" onmouseover="cateShow(this)" onmouseout="cateHidden(this)" id="{{ direction.id }}">
             <a class="menus-item-all" href="#">
                 {{ direction.name }}
             </a>
@@ -37,35 +36,74 @@
 {% block js %}
     <script src="/static/js/jquery-3.1.1.js"></script>
     <script>
-        function cateShow(ths) {
-            $.ajax({
-                url: '/blog/home/get-item-set/',
-                type: 'GET',
-                dataType: 'JSON',
-                data: {id: ths.getAttribute('id')},
-                success: function (ret) {
-                    var classification_list = ret;
-                    console.log(classification_list);
-                    var div_tag = document.createElement('div');
-                    div_tag.classList.add('menus-set');
-                    div_tag.style.position = 'absolute';
-                    div_tag.style.left = '150px';
-                    div_tag.style.top = '0';
-                    div_tag.style.zIndex = '999';
-                    {#div_tag.style.cssFloat = 'right';#}
-                    $.each(classification_list, function (index, classification) {
-                        console.log(classification + 'eweqwe');
-                        var tag = document.createElement('a');
-                        tag.innerHTML = classification;
-                        div_tag.append(tag);
-                    });
-                    ths.append(div_tag);
-                }
-            })
+        $(
+            /*网页加载完成后，请求对应的各个子标签*/
+            function () {
+                var tags = $('.pg-body .menus').children('.menus-item');
+                $.each(tags, function (index, tag) {
+                    var wReady = new window_ready();
+                    wReady.cateShow(tag);
+                })
+            }
+        );
+
+        /*根据id，请求对应的各个子标签*/
+        function window_ready() {
+            this.cateShow = function cateShow(ths) {
+                $.ajax({
+                    url: '/blog/home/get-item-set/',
+                    type: 'GET',
+                    dataType: 'JSON',
+                    data: {id: ths.getAttribute('id')},
+                    success: function (ret) {
+                        var classification_list = ret;
+                        /*var div_tag = $("<div>");
+                        div_tag.attr('class', 'menus-set');
+                        div_tag.css({
+                            position: 'absolute',
+                            left: '150px',
+                            top: 0,
+                            zIndex: 999,
+                            display: 'none',
+                            //float: 'right',
+                        });*/
+
+
+                        var div_tag = document.createElement('div');
+                        div_tag.setAttribute('class', 'menus-set');
+                        {#div_tag.classList.add('menus-set nav nav-pills');#}
+                        div_tag.style.position = 'absolute';
+                        div_tag.style.left = '150px';
+                        div_tag.style.top = '0';
+                        div_tag.style.zIndex = '999';
+                        div_tag.style.display = 'none';
+                        div_tag.style.backgroundColor = 'yellow';
+                        //div_tag.style.cssFloat = 'right';
+                        $.each(classification_list, function (index, classification) {
+                            {#var tag = document.createElement('a');#}
+                            {#tag.innerHTML = classification;#}
+                            {#div_tag.append(tag);#}
+                            var tag = $('<a>');
+                            tag.html(classification);
+                            tag.css({
+                                width: '160px',
+                            });
+                            div_tag.appendChild(tag[0]);
+                        });
+                        $('#' + ths.getAttribute('id')).append($(div_tag));
+                    }
+                })
+            }
         }
 
-        function cateHide(ths) {
-            $(ths).children('.menus-set').removeClass('menus-set');
+        function cateShow(ths) {
+            /*遍历ths下的所有class为menus-set的子标签，并设置display属性*/
+            {#$(ths).children('.menus-set').css('display', 'block');#}
+            $(ths).children('.menus-set')[0].style.display = 'block';
+        }
+
+        function cateHidden(ths) {
+            $(ths).children('.menus-set').css('display', 'none');
         }
 
     </script>
