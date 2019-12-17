@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="referrer" content="no-referrer">
     <title>
         {% block title %}
 
@@ -85,10 +86,14 @@
         {% endblock %}
     </div>
 </div>
-<div class="pg-footer">
 
+<div class="pg-footer">
+    {% block pg-footer %}
+
+    {% endblock %}
 </div>
 
+<script src="/static/js/jquery-3.1.1.js"></script>
 {% block js %}
 
 {% endblock %}

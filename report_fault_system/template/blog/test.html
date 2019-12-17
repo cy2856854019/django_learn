@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="main">
+
+</div>
+
+<script src="/static/js/jquery-3.1.1.js"></script>
+<script>
+    $(
+        function () {
+            var div_tag = $("<div>");
+            div_tag.attr('class', 'menus-set');
+            div_tag.html('子标签');
+
+            $('#main').append(div_tag);
+        }
+    )
+</script>
+</body>
+</html>

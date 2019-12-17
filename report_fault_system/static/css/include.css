@@ -94,7 +94,7 @@ img {
 .pg-body .contents {
     position: absolute;
     top: 48px;
-    bottom: 0;
+    bottom: 100px;
     left: 201px;
     right: 0;
     background-color: white;

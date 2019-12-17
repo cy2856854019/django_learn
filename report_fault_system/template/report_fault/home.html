@@ -1,0 +1,79 @@
+{% extends 'include/include.html' %}
+
+{% block title %}
+    报障主页
+{% endblock %}
+
+{% block css %}
+    <style>
+        .pg-body .menus .menus-items {
+            text-align: center;
+        }
+
+        .menus-set {
+            position: relative;
+            left: 30px;
+            display: none;
+        }
+
+        .menus-set a {
+            display: block;
+        }
+    </style>
+
+{% endblock %}
+
+{% block menus %}
+    <div class="menus-items">
+        <a href="#" class="menus-item-all">文章管理</a>
+        <div class="menus-set">
+            <a href="#">文章管理一</a>
+            <a href="#">文章管理二</a>
+            <a href="#">文章管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">分类管理</a>
+        <div class="menus-set">
+            <a href="#">分类管理一</a>
+            <a href="#">分类管理二</a>
+            <a href="#">分类管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">标签管理</a>
+        <div class="menus-set">
+            <a href="#">标签管理一</a>
+            <a href="#">标签管理二</a>
+            <a href="#">标签管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">个人管理</a>
+        <div class="menus-set">
+            <a href="#">个人管理一</a>
+            <a href="#">个人管理二</a>
+            <a href="#">个人管理三</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block contents %}
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        $('.menus-items').click(
+            function () {
+                var display = $(this).children('.menus-set').css('display');
+                console.log(display);
+                $('.menus-set').css('display', 'none');
+
+                if (display=='none'){
+                    $(this).children('.menus-set').css('display', 'block');
+                }
+            }
+        );
+    </script>
+{% endblock %}

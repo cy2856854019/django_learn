@@ -14,6 +14,19 @@
         .pg-body .menus .menus-item {
             position: relative;
         }
+
+        .post_item_summary > a {
+            float: left;
+        }
+
+        .pg-footer {
+            position: fixed;
+            bottom: 0;
+            left: 201px;
+            right: 0;
+            background-color: yellow;
+            height: 50px;
+        }
     </style>
 {% endblock %}
 
@@ -29,12 +42,266 @@
 
 {% block contents %}
     <div class="contents-items">
-        文章一
+        <div class="hot">
+            <ul>
+                <li class="editor_pick">
+                    <h4>
+                        <a href="https://www.cnblogs.com/lixinjie/p/a-story-about-thread-pool-as-if-they-were-people.html"
+                           id="editor_pick_lnk" target="_blank">
+                            【编辑推荐】线程池开门营业招聘开发人员的一天
+                            <span id="editor_pick_count">
+                            (16/1776)
+                        </span>
+                        </a>
+                    </h4>
+                </li>
+                <li>
+                    <a href="https://www.cnblogs.com/shanyou/p/12051570.html" target="_blank"
+                       title="阅读2537, 评论27, 推荐51">
+                        [最多推荐]超燃| 2019 中国.NET 开发者峰会视频发布(27/2537)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.cnblogs.com/ityouknow/p/12051080.html" target="_blank"
+                       title="阅读1260, 评论10, 推荐2">
+                        [最多评论]我在华为做外包的真实经历！(10/1260)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/n/652032/" target="_blank" title="阅读1989, 评论29, 推荐8">
+                        [新闻头条]三星关闭昆山工厂！员工赔偿N+5！(29/1989)
+                    </a>
+                </li>
+                <li>
+                    <a href="https://news.cnblogs.com/n/652049/" target="_blank" title="阅读254, 评论0, 推荐2">
+                        [推荐新闻]NASA的朱诺号探测器在木星上发现巨大的气旋风暴(0/254)
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div class="contents-list">
+            <div class="post_item">
+                <div class="post_item_body">
+                    <h3>
+                        <a class="titlelnk" href="https://www.cnblogs.com/qing-gee/p/12053156.html" target="_blank">
+                            灵魂拷问：如何检查Java数组中是否包含某个值 ？
+                        </a>
+                    </h3>
+                    <p class="post_item_summary">
+                        <a href="https://www.cnblogs.com/qing-gee/" target="_blank">
+                            <img src="http://pic.cnblogs.com/face/1269119/20191120180854.png" alt="博主头像" width="48"
+                            >
+                        </a>
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                    </p>
+                    <div class="post_item_foot">
+                        <a href="https://www.cnblogs.com/qing-gee/" class="lightblue">
+                            沉默王二
+                        </a>
+                        发布于 2019-12-17 10:43
+                        <span class="article_comment">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html#commentform"
+                               title="0001-01-01 08:05" class="gray">
+                                评论(0)
+                            </a>
+                        </span>
+                        <span class="article_view">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html" class="gray">
+                                阅读(1)
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="post_item">
+                <div class="post_item_body">
+                    <h3>
+                        <a class="titlelnk" href="https://www.cnblogs.com/qing-gee/p/12053156.html" target="_blank">
+                            灵魂拷问：如何检查Java数组中是否包含某个值 ？
+                        </a>
+                    </h3>
+                    <p class="post_item_summary">
+                        <a href="https://www.cnblogs.com/qing-gee/" target="_blank">
+                            <img src="http://pic.cnblogs.com/face/1269119/20191120180854.png" alt="博主头像" width="48"
+                            >
+                        </a>
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                    </p>
+                    <div class="post_item_foot">
+                        <a href="https://www.cnblogs.com/qing-gee/" class="lightblue">
+                            沉默王二
+                        </a>
+                        发布于 2019-12-17 10:43
+                        <span class="article_comment">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html#commentform"
+                               title="0001-01-01 08:05" class="gray">
+                                评论(0)
+                            </a>
+                        </span>
+                        <span class="article_view">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html" class="gray">
+                                阅读(1)
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="post_item">
+                <div class="post_item_body">
+                    <h3>
+                        <a class="titlelnk" href="https://www.cnblogs.com/qing-gee/p/12053156.html" target="_blank">
+                            灵魂拷问：如何检查Java数组中是否包含某个值 ？
+                        </a>
+                    </h3>
+                    <p class="post_item_summary">
+                        <a href="https://www.cnblogs.com/qing-gee/" target="_blank">
+                            <img src="http://pic.cnblogs.com/face/1269119/20191120180854.png" alt="博主头像" width="48"
+                            >
+                        </a>
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                    </p>
+                    <div class="post_item_foot">
+                        <a href="https://www.cnblogs.com/qing-gee/" class="lightblue">
+                            沉默王二
+                        </a>
+                        发布于 2019-12-17 10:43
+                        <span class="article_comment">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html#commentform"
+                               title="0001-01-01 08:05" class="gray">
+                                评论(0)
+                            </a>
+                        </span>
+                        <span class="article_view">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html" class="gray">
+                                阅读(1)
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="post_item">
+                <div class="post_item_body">
+                    <h3>
+                        <a class="titlelnk" href="https://www.cnblogs.com/qing-gee/p/12053156.html" target="_blank">
+                            灵魂拷问：如何检查Java数组中是否包含某个值 ？
+                        </a>
+                    </h3>
+                    <p class="post_item_summary">
+                        <a href="https://www.cnblogs.com/qing-gee/" target="_blank">
+                            <img src="http://pic.cnblogs.com/face/1269119/20191120180854.png" alt="博主头像" width="48"
+                            >
+                        </a>
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                    </p>
+                    <div class="post_item_foot">
+                        <a href="https://www.cnblogs.com/qing-gee/" class="lightblue">
+                            沉默王二
+                        </a>
+                        发布于 2019-12-17 10:43
+                        <span class="article_comment">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html#commentform"
+                               title="0001-01-01 08:05" class="gray">
+                                评论(0)
+                            </a>
+                        </span>
+                        <span class="article_view">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html" class="gray">
+                                阅读(1)
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div class="post_item">
+                <div class="post_item_body">
+                    <h3>
+                        <a class="titlelnk" href="https://www.cnblogs.com/qing-gee/p/12053156.html" target="_blank">
+                            灵魂拷问：如何检查Java数组中是否包含某个值 ？
+                        </a>
+                    </h3>
+                    <p class="post_item_summary">
+                        <a href="https://www.cnblogs.com/qing-gee/" target="_blank">
+                            <img src="http://pic.cnblogs.com/face/1269119/20191120180854.png" alt="博主头像" width="48"
+                            >
+                        </a>
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                        在逛 programcreek 的时候，我发现了一些专注细节但价值连城的主题。比如说：如何检查Java数组中是否包含某个值 ？像这类灵魂拷问的主题，非常值得深入地研究一下。
+                        另外，我想要告诉大家的是，作为程序员，我们千万不要轻视这些基础的知识点。因为基础的知识点是各种上层技术共同的基础，只有彻底地掌 ...
+                    </p>
+                    <div class="post_item_foot">
+                        <a href="https://www.cnblogs.com/qing-gee/" class="lightblue">
+                            沉默王二
+                        </a>
+                        发布于 2019-12-17 10:43
+                        <span class="article_comment">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html#commentform"
+                               title="0001-01-01 08:05" class="gray">
+                                评论(0)
+                            </a>
+                        </span>
+                        <span class="article_view">
+                            <a href="https://www.cnblogs.com/qing-gee/p/12053156.html" class="gray">
+                                阅读(1)
+                            </a>
+                        </span>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
     </div>
 {% endblock %}
 
+{% block pg-footer %}
+    <ul class="pagination">
+        <li class="disabled"><a href="#" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+        <li class="active"><a href="#">1 <span class="sr-only">(current)</span></a></li>
+        <li><a href="#">2</a></li>
+        <li><a href="#">3</a></li>
+        <li><a href="#">4</a></li>
+        <li><a href="#">5</a></li>
+        <li><a href="#" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+    </ul>
+{% endblock %}
+
 {% block js %}
-    <script src="/static/js/jquery-3.1.1.js"></script>
     <script>
         $(
             /*网页加载完成后，请求对应的各个子标签*/
@@ -67,7 +334,6 @@
                             display: 'none',
                             //float: 'right',
                         });*/
-
 
                         var div_tag = document.createElement('div');
                         div_tag.setAttribute('class', 'menus-set');

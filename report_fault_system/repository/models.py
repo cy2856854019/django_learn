@@ -166,6 +166,7 @@ class Direction(models.Model):
     方向：
     '''
     name = models.CharField(verbose_name='名称', max_length=32)
+
     # classification = models.ForeignKey('Classification', on_delete=True)
 
     class Meta:
@@ -189,3 +190,32 @@ class Classification(models.Model):
 
     def __str__(self):
         return self.name
+
+
+# 报障单
+class Trouble(models.Model):
+    title = models.CharField(max_length=32)
+    detail = models.TextField()
+    user = models.ForeignKey('User', on_delete=False, related_name='u')
+    ctime = models.DateField()
+
+    status_choice = (
+        (1, '未处理'),
+        (2, '处理中'),
+        (3, '已处理'),
+    )
+    status = models.IntegerField(choices=status_choice)
+    processor = models.ForeignKey('User', related_name='p', on_delete=False, null=False)
+    solution = models.TextField(null=False)
+    ptime = models.DateField(null=False)
+
+    evaluation_choice = (
+        (1, '不满意'),
+        (2, '一般'),
+        (3, '满意'),
+        (4, '非常满意'),
+    )
+    evaluation = models.IntegerField(choices=evaluation_choice, null=False, default=2)
+
+    class Meta:
+        db_table = 'Trouble'
