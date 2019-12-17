@@ -765,6 +765,44 @@ p1 = Publish.objects.create(name='人民出版社')[0]
 Book.objects.create(name='基础', price=20, author_id=1, pub_date='2017-12-12', publish=p1)
 ```
 
+## 一对一（OneToOneField）
+
+```python
+class Person(models.Model):
+    name = models.CharField(max_length=20)
+
+
+class PersonDetail(models.Model):
+    age = models.IntegerField(10)
+    email = models.EmailField()
+　　# person = models.ForeignKey(Person, unique=True)  
+　　person = models.OneToOneField(Person)
+    
+    
+def one(request):
+　　# 查询alex的用户信息
+    # 前向查询
+    ret = models.PersonDetail.objects.get(id=1) #  ret = models.PersonDetail.objects.get(id=models.Person.objects.get(name='alex').id)
+　　# 这里的person是表中的关联外键的字段并非类名字
+    print(ret.person)  # Person object 封装的Person对象
+    print(ret.person.name, ret.age, ret.email)
+
+　　# 查询alex的用户信息
+    # 反向查询
+    obj = models.Person.objects.get(name='alex')
+    # persondetail 类名字的小写
+    print(obj.persondetail)  # PersonDetail object
+    print(obj.name, obj.persondetail.email, obj.persondetail.age)
+    return HttpResponse('OK')
+'''
+“反向”查询中有所不同。一对一关系中的关联模型同样具有一个管理器对象，但是该管理器表示一个单一的对象而不是对象的集合。
+
+一对一的方式原理上是  ForeignKey + unique=True。但是既然是外键 那么一对多的反向查询方式应该和一对一的反向查询方式相同，而实际上不是这样的，一对一的反向查询方式是 obj.persondetail   对象.类名小写 ，没有_set。
+'''
+```
+
+
+
 ## 多对多
 
 **多对多关系必须依赖第三张表**
