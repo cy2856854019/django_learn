@@ -1,0 +1,111 @@
+{% extends 'include/include.html' %}
+
+{% block title %}
+    报障单
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <style>
+        .menus-set {
+            position: relative;
+            left: 30px;
+            display: none;
+        }
+
+        .menus-set a {
+            display: block;
+        }
+
+        .create-trouble{
+            float: right;
+            margin: 2px;
+            background-color: red;
+            font-size: 20px;
+            height: 40px;
+        }
+    </style>
+
+{% endblock %}
+
+{% block menus %}
+    <div class="menus-items">
+        <a href="#" class="menus-item-all">文章管理</a>
+        <div class="menus-set">
+            <a href="#">文章管理一</a>
+            <a href="#">文章管理二</a>
+            <a href="#">文章管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">分类管理</a>
+        <div class="menus-set">
+            <a href="#">分类管理一</a>
+            <a href="#">分类管理二</a>
+            <a href="#">分类管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">标签管理</a>
+        <div class="menus-set">
+            <a href="#">标签管理一</a>
+            <a href="#">标签管理二</a>
+            <a href="#">标签管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">个人管理</a>
+        <div class="menus-set">
+            <a href="#">个人管理一</a>
+            <a href="#">个人管理二</a>
+            <a href="#">个人管理三</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block contents %}
+    {% if id %}
+        <form action="{% url 'get_trouble' trouble_id=id %}" method="POST">
+    {% else %}
+        <form action="{% url 'get_trouble' %}" method="POST">
+    {% endif %}
+{% csrf_token %}
+<div class="form-group">
+    <label>
+        {{ trouble_form.title.label }}
+        <span>{{ trouble_form.title.errors.0 }}</span>
+    </label>
+    <p>
+        {{ trouble_form.title }}
+    </p>
+</div>
+<div class="form-group">
+    <label>
+        {{ trouble_form.user.label }}
+        <span>{{ trouble_form.user.errors.0 }}</span>
+    </label>
+    <p>
+        {{ trouble_form.user }}
+    </p>
+</div>
+<div class="form-group">
+    <label>
+        {{ trouble_form.detail.label }}
+        <span>{{ trouble_form.detail.errors.0 }}</span>
+    </label>
+    <p>
+        {{ trouble_form.detail }}
+    </p>
+</div>
+<div class="form-group">
+    <label>
+        {{ trouble_form.ctime.label }}
+        <span>{{ trouble_form.ctime.errors.0 }}</span>
+    </label>
+    <p>
+        {{ trouble_form.ctime }}
+    </p>
+</div>
+<input type="submit" value="Save">
+</form>
+{% endblock %}

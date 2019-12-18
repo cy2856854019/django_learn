@@ -197,17 +197,17 @@ class Trouble(models.Model):
     title = models.CharField(max_length=32)
     detail = models.TextField()
     user = models.ForeignKey('User', on_delete=False, related_name='u')
-    ctime = models.DateField()
+    ctime = models.DateTimeField()
 
     status_choice = (
         (1, '未处理'),
         (2, '处理中'),
         (3, '已处理'),
     )
-    status = models.IntegerField(choices=status_choice)
-    processor = models.ForeignKey('User', related_name='p', on_delete=False, null=False)
-    solution = models.TextField(null=False)
-    ptime = models.DateField(null=False)
+    status = models.IntegerField(choices=status_choice, default=1)
+    processor = models.ForeignKey('User', related_name='p', on_delete=False, null=True)
+    solution = models.TextField(null=True)
+    ptime = models.DateTimeField(null=True)
 
     evaluation_choice = (
         (1, '不满意'),
@@ -215,7 +215,7 @@ class Trouble(models.Model):
         (3, '满意'),
         (4, '非常满意'),
     )
-    evaluation = models.IntegerField(choices=evaluation_choice, null=False, default=2)
+    evaluation = models.IntegerField(choices=evaluation_choice, null=True)
 
     class Meta:
         db_table = 'Trouble'

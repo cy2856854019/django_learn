@@ -16,7 +16,7 @@ body {
 
 .pg-header {
     height: 48px;
-    background-color: #2f72ab;
+    background-color: #ab2f2f42;
     min-width: 1000px; /*当小于最小宽度时，下边框会出现滚动条*/
 }
 
