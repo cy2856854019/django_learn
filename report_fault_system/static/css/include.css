@@ -8,6 +8,27 @@ body {
 
 .right {
     float: right;
+    margin-right: 20px;
+}
+
+/*隐藏登录注册窗口*/
+.model {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    opacity: 0.9;
+    z-index: 9;
+}
+
+.model div {
+    width: 60%;
+    height: 80%;
+    background-color: white;
+    margin: 0 auto;
+    margin-top: 150px;
 }
 
 .hide {

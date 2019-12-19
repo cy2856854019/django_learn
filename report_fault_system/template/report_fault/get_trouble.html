@@ -17,7 +17,7 @@
             display: block;
         }
 
-        .create-trouble{
+        .create-trouble {
             float: right;
             margin: 2px;
             background-color: red;
@@ -63,6 +63,12 @@
     </div>
 {% endblock %}
 
+{% block logo %}
+    <a href="{% url 'report_fault_home' %}">
+        logo
+    </a>
+{% endblock %}
+
 {% block contents %}
     {% if id %}
         <form action="{% url 'get_trouble' trouble_id=id %}" method="POST">
@@ -95,15 +101,6 @@
     </label>
     <p>
         {{ trouble_form.detail }}
-    </p>
-</div>
-<div class="form-group">
-    <label>
-        {{ trouble_form.ctime.label }}
-        <span>{{ trouble_form.ctime.errors.0 }}</span>
-    </label>
-    <p>
-        {{ trouble_form.ctime }}
     </p>
 </div>
 <input type="submit" value="Save">

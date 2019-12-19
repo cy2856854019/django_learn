@@ -1,3 +1,4 @@
+import datetime
 from django import forms
 from django.forms import widgets, fields
 from repository.models import User, Trouble
@@ -29,13 +30,6 @@ class TroubleForm(forms.Form):
             'require': '输入不能为空',
         }
     )
-    ctime = forms.DateTimeField(
-        widget=widgets.SelectDateWidget,
-        label='报障时间',
-        error_messages={
-            'require': '输入不能为空',
-        }
-    )
 
     def __init__(self, *args, **kwargs):
         super(TroubleForm, self).__init__(*args, **kwargs)
@@ -43,6 +37,7 @@ class TroubleForm(forms.Form):
 
     def save(self, trouble_id):
         self.cleaned_data['user_id'] = self.cleaned_data.pop('user')
+        self.cleaned_data['ctime'] = datetime.datetime.now()
         if trouble_id == 0:
             Trouble.objects.create(**self.cleaned_data)
         else:

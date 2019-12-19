@@ -45,11 +45,25 @@ def home(request, **kwargs):
     if request.method == 'GET':
         for key, value in kwargs.items():
             kwargs[key] = int(kwargs.pop(key))
+
     direction_list = Direction.objects.all()
+    user_form = UserForm()
+    # 提取浏览器中的cookie，如果不为空，表示已经登录
+    username = request.COOKIES.get('username')
+    # session = list(request.session.values())
+    # 是否已开通博客
+    user = blog_opening = None
+    if username:
+        user = User.objects.filter(username=username).first()
+        blog_opening = hasattr(user, 'blog')
 
     return render(request, 'blog/home.html',
                   {
                       'direction_list': direction_list,
+                      'user_form': user_form,
+                      'username': username,
+                      'user': user,
+                      'blog_opening': blog_opening,
                   }
                   )
 

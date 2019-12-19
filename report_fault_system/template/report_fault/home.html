@@ -63,6 +63,12 @@
     </div>
 {% endblock %}
 
+{% block logo %}
+    <a href="{% url 'report_fault_home' %}">
+        logo
+    </a>
+{% endblock %}
+
 {% block contents %}
     <div class="create-trouble btn btn-primary dropdown-toggle">
         <a href="{% url 'get_trouble' %}">创建报障单</a>
@@ -92,6 +98,10 @@
                 <th>{{ trouble.solution }}</th>
                 <th>{{ trouble.evaluation }}</th>
                 <th>
+                    <a href="{% url 'rob_trouble' trouble_id=trouble.id %}">
+                        抢单
+                    </a>
+                    |
                     <a href="{% url 'del_trouble' trouble_id=trouble.id %}">
                         删除
                     </a>

@@ -14,9 +14,68 @@
     {% endblock %}
 </head>
 <body>
+<div>
+    <!-- 登录框 -->
+    <div class="model login hide">
+        <div class="box-login">
+            <form action="/blog/login/" method="POST">
+                <p>
+                    {{ user_form.username.label }}: {{ user_form.username }}
+                    <span>{{ user_form.username.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.captcha.label }}: {{ user_form.captcha }}
+                    <span>{{ user_form.captcha.errors.0 }}</span>
+                    <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
+                </p>
+                <p>
+                    {{ user_form.save_login }} {{ user_form.save_login.label }}
+                    <span>{{ user_form.save_login.errors.0 }}</span>
+                </p>
+                <input type="submit" value="登录">
+                <button type="button" class="close">关闭</button>
+            </form>
+
+        </div>
+    </div>
+    <!-- 注册框 -->
+    <div class="model register hide">
+        <div class="box-register">
+            <form action="/blog/register/" method="POST">
+                <p>
+                    {{ user_form.username.label }}: {{ user_form.username }}
+                    <span>{{ user_form.username.errors.0 }}</span>
+
+                </p>
+                <p>
+                    {{ user_form.psw.label }}: {{ user_form.psw }} <span>{{ user_form.psw.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.re_psw.label }}: {{ user_form.re_psw }} <span>{{ user_form.re_psw.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.email.label }}: {{ user_form.email }} <span>{{ user_form.email.errors.0 }}</span>
+                </p>
+                <p>
+                    {{ user_form.captcha.label }}: {{ user_form.captcha }}
+                    <span>{{ user_form.captcha.errors.0 }}</span>
+                    <img src="{% url 'get_check_code' %}" onclick="freshCaptcha(this)">
+                </p>
+                <input type="submit" value="注册">
+                <button type="button" class="close">关闭</button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <div class="pg-header">
     <div class="logo left">
-        logo
+        {% block logo %}
+
+        {% endblock %}
     </div>
     <div class="head-menus left">
         <div class="items">
@@ -53,24 +112,34 @@
         </div>
     </div>
     <div class="head-user right">
-        <div class="items">
-            <a href="#">消息</a>
-        </div>
-        <div class="items">
-            <a href="#">通知</a>
-        </div>
-        <div class="items">
-            <a href="#">任务</a>
-        </div>
-        <div class="items">
-            <a href="#">
-                <img src="/media/img/1.png" class="person">
-            </a>
-            <div class="items-set">
-                <a href="#">我的</a>
-                <a href="#">退出</a>
+        {% if username %}
+            <div class="items">
+                <a href="#">消息</a>
             </div>
-        </div>
+            <div class="items">
+                <a href="#">通知</a>
+            </div>
+            <div class="items">
+                <a href="#">任务</a>
+            </div>
+            <div class="items">
+                <a href="#">
+                    <img src="/media/img/1.png" class="person">
+                </a>
+                <div class="items-set">
+                    <a href="#">{{ username }}</a>
+                    {% if not blog_opening %}
+                        <a href="/blog/open/{{ user.id }}">开通博客</a>
+                    {% else %}
+                        <a href="/blog/{{ user.username }}/myblog/">我的博客</a>
+                    {% endif %}
+                    <a href="/blog/login_out/">退出</a>
+                </div>
+            </div>
+        {% else %}
+            <a class="login" href="#">登录</a>
+            <a class="register" href="#">注册</a>
+        {% endif %}
     </div>
 
 </div>
@@ -94,6 +163,30 @@
 </div>
 
 <script src="/static/js/jquery-3.1.1.js"></script>
+<script>
+    $('a.login').click(
+        function () {
+            $('.model.login').removeClass('hide');
+        }
+    );
+
+    $('a.register').click(
+        function () {
+            $('.model.register').removeClass('hide');
+        }
+    );
+
+    $('.close').click(
+        function () {
+            $(this).parents('.model').addClass('hide');
+        }
+    );
+    {#$(document).on(#}
+    {#    'click', '.close', function () {#}
+    {#        $('.model').addClass('hide');#}
+    {#    }#}
+    {#)#}
+</script>
 {% block js %}
 
 {% endblock %}

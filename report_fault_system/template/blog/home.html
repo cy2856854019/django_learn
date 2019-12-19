@@ -30,6 +30,12 @@
     </style>
 {% endblock %}
 
+{% block logo %}
+    <a href="{% url 'blog_home' %}">
+        logo
+    </a>
+{% endblock %}
+
 {% block menus %}
     {% for direction in direction_list %}
         <div class="menus-item" onmouseover="cateShow(this)" onmouseout="cateHidden(this)" id="{{ direction.id }}">
