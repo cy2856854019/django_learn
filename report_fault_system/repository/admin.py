@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Classification, Direction
+from .models import Classification, Direction, Trouble
 
 
 class ClassificationAdmin(admin.ModelAdmin):
@@ -9,3 +9,4 @@ class ClassificationAdmin(admin.ModelAdmin):
 
 admin.site.register(Direction)
 admin.site.register(Classification, ClassificationAdmin)
+admin.site.register(Trouble)

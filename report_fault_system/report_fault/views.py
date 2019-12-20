@@ -1,6 +1,8 @@
+import json
+from django.db import connection
 from django.shortcuts import render, redirect, reverse, HttpResponse
 from django.db.models import Q
-from repository.models import Trouble
+from repository.models import Trouble, User
 from .troubleform import TroubleForm
 from blog.forms import UserForm
 
@@ -61,3 +63,31 @@ def rob_trouble(request, **kwargs):
     if not num:
         return HttpResponse('手速太慢，抢单失败')
     return redirect(reverse('report_fault_home'))
+
+
+def report_trouble(request):
+    # sql = '''
+    # SELECT strftime('%s', ctime) ,
+    # (SELECT count(id) FROM main.Trouble as T2 WHERE processor_id=1 AND T1.ctime=T2.ctime),
+    # (SELECT count(id) FROM main.Trouble as T2 WHERE processor_id=2 AND T1.ctime=T2.ctime)
+    # FROM main.Trouble as T1 GROUP BY strftime('%Y-%m', ctime);
+    # '''
+    return render(request, 'report_fault/report_trouble.html')
+
+
+def report_trouble_get(request):
+    cursor = connection.cursor()
+    series_data = list()
+    user_list = User.objects.all()
+    for user in user_list:
+        cursor.execute(
+            '''SELECT strftime('%%s', strftime('%%Y-%%m-01', ctime)) * 1000, count(id) FROM main.Trouble WHERE processor_id=%s GROUP BY strftime('%%Y-%%m', ctime)''',
+            [user.id, ])
+        result = cursor.fetchall()
+        if result:
+            dic = {
+                'name': user.username,
+                'data': result,
+            }
+            series_data.append(dic)
+    return HttpResponse(json.dumps(series_data))

@@ -1,0 +1,119 @@
+{% extends 'include/include.html' %}
+{% block title %}
+    折线图
+{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.css">
+    <style>
+        .menus-set {
+            position: relative;
+            left: 30px;
+            display: none;
+        }
+
+        .menus-set a {
+            display: block;
+        }
+    </style>
+
+{% endblock %}
+
+{% block menus %}
+    <div class="menus-items">
+        <a href="#" class="menus-item-all">文章管理</a>
+        <div class="menus-set">
+            <a href="#">文章管理一</a>
+            <a href="#">文章管理二</a>
+            <a href="#">文章管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">分类管理</a>
+        <div class="menus-set">
+            <a href="#">分类管理一</a>
+            <a href="#">分类管理二</a>
+            <a href="#">分类管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">标签管理</a>
+        <div class="menus-set">
+            <a href="#">标签管理一</a>
+            <a href="#">标签管理二</a>
+            <a href="#">标签管理三</a>
+        </div>
+    </div>
+    <div class="menus-items">
+        <a href="#">个人管理</a>
+        <div class="menus-set">
+            <a href="#">个人管理一</a>
+            <a href="#">个人管理二</a>
+            <a href="#">个人管理三</a>
+        </div>
+    </div>
+{% endblock %}
+
+{% block logo %}
+    <a href="{% url 'report_fault_home' %}">
+        logo
+    </a>
+{% endblock %}
+
+{% block contents %}
+    <div id="container" style="max-width:800px;height:400px"></div>
+    {{ series_data }}
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.highcharts.com.cn/jquery/jquery-1.8.3.min.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/highcharts.js"></script>
+    <script src="https://code.highcharts.com.cn/highcharts/modules/exporting.js"></script>
+    <script src="https://img.hcharts.cn/highcharts-plugins/highcharts-zh_CN.js"></script>
+    <script>
+        var config = {
+            chart: {
+                type: 'spline'
+            },
+            title: {
+                text: '报障处理情况曲线图'
+            },
+            subtitle: {
+                text: '非规律性时间内的变化'
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: null
+                }
+            },
+            colors: ['#6CF', '#39F', '#06C', '#036', '#000'],
+            yAxis: {
+                title: {
+                    text: '处理单数 (单)'
+                },
+                min: 0
+            },
+            tooltip: {
+                headerFormat: '<b>{series.name}</b><br>',
+                pointFormat: '{point.x:%e. %b}: {point.y:.0f} 单'
+            },
+            plotOptions: {
+                spline: {
+                    marker: {
+                        enabled: true
+                    }
+                }
+            },
+            series: '',
+        };
+        $.ajax({
+            url: '/report_fault/report_trouble_get/',
+            dataType: 'JSON',
+            success: function (ret) {
+                config['series'] = ret;
+                Highcharts.chart('container', config);
+            }
+        });
+    </script>
+{% endblock %}

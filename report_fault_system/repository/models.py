@@ -219,3 +219,6 @@ class Trouble(models.Model):
 
     class Meta:
         db_table = 'Trouble'
+
+    def __str__(self):
+        return self.title
