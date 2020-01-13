@@ -222,3 +222,93 @@ class Trouble(models.Model):
 
     def __str__(self):
         return self.title
+
+
+# RBAC role based access control
+# 角色
+class Role(models.Model):
+    caption = models.CharField(max_length=32)
+    user = models.ManyToManyField('User')
+
+    class Meta:
+        db_table = 'Role'
+        verbose_name_plural = '角色'
+
+    def __str__(self):
+        return self.caption
+
+
+# 权限
+class Permission(models.Model):
+    # http://127.0.0.1/report_fault/order.html 订单管理
+    # http://127.0.0.1/report_fault/user.html 用户管理
+    # http://127.0.0.1/report_fault/permission.html 权限管理
+    caption = models.CharField(max_length=32)
+    url = models.CharField(max_length=64)
+
+    class Meta:
+        db_table = 'Permission'
+        verbose_name_plural = '权限'
+
+    def __str__(self):
+        return '%s-%s' % (self.caption, self.url)
+
+
+# 操作
+class Action(models.Model):
+    # post 增
+    # delete 删
+    # put 改
+    # get 查
+    caption = models.CharField(max_length=32)
+    action = models.CharField(max_length=32)
+
+    class Meta:
+        db_table = 'Action'
+        verbose_name_plural = '操作'
+
+    def __str__(self):
+        return '%s-%s' % (self.caption, self.action)
+
+
+# 权限与操作 多对多关联
+class PermissionToAction(models.Model):
+    # http://127.0.0.1/report_fault/order.html?action=post 订单管理（增）
+    # http://127.0.0.1/report_fault/user.html?action=delete 用户管理（删）
+    # http://127.0.0.1/report_fault/permission.html?action=put 权限管理(改)
+    url = models.ForeignKey('Permission', on_delete=False)
+    action = models.ForeignKey('Action', on_delete=False)
+    menu = models.ForeignKey('Menu', on_delete=False, null=True)
+
+    class Meta:
+        db_table = 'PermissionToAction'
+        verbose_name_plural = '权限To操作'
+
+    def __str__(self):
+        return '%s-%s: %s?action=%s' % (self.url.caption, self.action.caption, self.url.url, self.action.action)
+
+
+# 权限与角色多对多
+class PermissionToActionToRole(models.Model):
+    role = models.ForeignKey('Role', on_delete=False)
+    permissionToAction = models.ForeignKey('PermissionToAction', on_delete=False)
+
+    class Meta:
+        db_table = 'PermissionToActionToRole'
+        verbose_name_plural = '权限To操作To角色'
+
+    def __str__(self):
+        return '%s: %s' % (self.role.caption, self.permissionToAction)
+
+
+# 菜单
+class Menu(models.Model):
+    caption = models.CharField(max_length=32)
+    parent = models.ForeignKey('self', null=True, related_name='p', on_delete=False)
+
+    class Meta:
+        db_table = 'Menu'
+        verbose_name_plural = '菜单'
+
+    def __str__(self):
+        return self.caption
