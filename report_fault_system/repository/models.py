@@ -304,7 +304,7 @@ class PermissionToActionToRole(models.Model):
 # 菜单
 class Menu(models.Model):
     caption = models.CharField(max_length=32)
-    parent = models.ForeignKey('self', null=True, related_name='p', on_delete=False)
+    parent = models.ForeignKey(to='self', null=True, related_name='p', on_delete=False, blank=True)
 
     class Meta:
         db_table = 'Menu'
